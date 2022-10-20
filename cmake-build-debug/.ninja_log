@@ -1,0 +1,22 @@
+# ninja log v5
+2	794	6879915737226760	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+11	815	6879915737466195	CMakeFiles/post_class.dir/post_class.cpp.obj	954962dcd75e03ce
+816	1057	6879915739851096	post_class.exe	e442ca918f9b491e
+4	1242	6879916590102996	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+1243	1491	6879916592542736	post_class.exe	e442ca918f9b491e
+10	937	6879920525603885	CMakeFiles/post_class.dir/post_class.cpp.obj	954962dcd75e03ce
+5	1070	6879920526950321	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+1071	1267	6879920528865253	post_class.exe	e442ca918f9b491e
+4	998	6879920791612799	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+999	1131	6879920792899517	post_class.exe	e442ca918f9b491e
+8	717	6879922138326028	CMakeFiles/post_class.dir/post_class.cpp.obj	954962dcd75e03ce
+3	769	6879922138824739	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+769	919	6879922140306813	post_class.exe	e442ca918f9b491e
+3	719	6879923519748979	CMakeFiles/post_class.dir/post_class.cpp.obj	954962dcd75e03ce
+720	851	6879923521039499	post_class.exe	e442ca918f9b491e
+8	707	6879923842867000	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+708	837	6879923844124099	post_class.exe	e442ca918f9b491e
+5	714	6879925072921360	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+715	845	6879925074179835	post_class.exe	e442ca918f9b491e
+4	716	6879925212850462	CMakeFiles/post_class.dir/main.cpp.obj	c1e3462510e9caf6
+716	848	6879925214135152	post_class.exe	e442ca918f9b491e
