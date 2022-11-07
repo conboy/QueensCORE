@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.23)
-project(post_class)
+project(QueensCore)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(post_class main.cpp post_class.h post_class.cpp)
+add_executable(QueensCore main.cpp post_class.h post_class.cpp)
