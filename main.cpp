@@ -1,37 +1,29 @@
+// https://www.youtube.com/watch?v=ZSefPfZqxpo&t=1858s
+#include <boost/beast/core.hpp>
+#include <boost/beast/websocket.hpp>
 #include <iostream>
-#include "post_class.h"
 #include <string>
-using namespace std;
+#include <thread>
+// g++ -I /usr/include/boost -pthread websocket.cpp 
+
+using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 int main() {
-    string owner;
-    string description;
-    string title;
-    cout << "Enter owner:" <<endl;
-    cin >> owner; //Note that using cin doesnt work with spaces.
-    cout << "Enter Title:" <<endl;
-    cin >> title;
-    cout << "Enter Description:" <<endl;
-    cin >> description;
-    Post first(owner, title, description);
-    first.upvote();
-    first.comment("Salass", "is sexy");
+    auto const address = boost::asio::ip::make_address("127.0.0.1");
+    auto const port = static_cast<unsigned short>(std::atoi("8083"));
 
+    boost::asio::io_context ioc{1};
 
-    //Prints all info on post.
-    cout << "Owner: " << first.get_owner() << endl;
-    cout << "Title: " << first.get_title() << endl;
-    cout << "Description: " << first.get_description() << endl;
-    cout << "Upvotes: " << to_string(first.get_upvote()) << "| Downvotes: " << to_string(first.get_downvote()) << endl;
-    cout << "Number of comments " << to_string(first.get_num_com()) << endl;
-    vector<string> comments = first.get_comment();
-    vector<string> com_owner = first.get_comment_owner();
-    for (int i = 0; i < first.get_num_com(); i++) {
-        cout << "Comment #" << to_string(i + 1);
-        cout << " | Owner: " << comments[i] << endl;
-        cout<< "Comment: " << com_owner[i] << endl;
+    tcp::acceptor acceptor{ioc, {address, port}};
+
+    while(1)
+    {
+        tcp::socket socket{ioc};
+        acceptor.accept(socket);
+        std::cout<<"socket accepted"<<std::endl;
+
+        std::thread{}.detach();
     }
 
     return 0;
 }
-
