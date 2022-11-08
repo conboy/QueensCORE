@@ -4,15 +4,16 @@
 #include <iostream>
 #include <string>
 #include <thread>
-// g++ -I /usr/include/boost -pthread websocket.cpp 
+// g++ -I /usr/include/boost -pthread main.cpp -o server
+
 
 using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 int main() {
-    auto const address = boost::asio::ip::make_address("127.0.0.1");
-    auto const port = static_cast<unsigned short>(std::atoi("8083"));
+    auto const address = boost::asio::ip::make_address("172.105.111.5");
+    auto const port = static_cast<unsigned short>(std::atoi("443"));
 
-    boost::asio::io_context ioc{1};
+    boost::asio::io_context ioc{2};
 
     tcp::acceptor acceptor{ioc, {address, port}};
 
