@@ -1,5 +1,6 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
+#include <boost/beast/core/make_printable.hpp>
 #include <boost/asio/ip/tcp.hpp>
 #include <cstdlib>
 #include <functional>
@@ -7,6 +8,9 @@
 #include <string>
 #include <thread>
 
+using namespace std;
+using namespace boost::beast;
+using namespace boost::asio;
 namespace beast = boost::beast;         // from <boost/beast.hpp>
 namespace http = beast::http;           // from <boost/beast/http.hpp>
 namespace websocket = beast::websocket; // from <boost/beast/websocket.hpp>
@@ -14,6 +18,9 @@ namespace net = boost::asio;            // from <boost/asio.hpp>
 using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 //------------------------------------------------------------------------------
+
+
+
 
 // Echoes back all received WebSocket messages
 void
@@ -35,16 +42,28 @@ do_session(tcp::socket socket)
         ws.accept();
 
         for (;;) {
-            // This buffer will hold the incoming message
-            beast::flat_buffer buffer;
-
-            // Read a message
+            // This buffer will hold the message from the client
+            flat_buffer buffer;
+            // Read the message coming from the client
             ws.read(buffer);
-            std::cout << "receive buffer size:" << buffer.size() << std::endl;
+            // Put the buffer contents in a string
+            string client_message = buffers_to_string(buffer.cdata());
+            // Print the client message to terminal
+            cout << client_message << endl;
+            // Do logic on the message
+            if (client_message == "register") {
+                // Send a message back
+                const_buffer message("Hello, world!", 13);
 
-            // Echo the message back
-            ws.text(ws.got_text());
-            ws.write(buffer.data());
+                // This sets all outgoing messages to be sent as text.
+                // Text messages must contain valid utf8, this is checked
+                // when reading but not when writing.
+                ws.text(true);
+
+                // Write the buffer as text
+                ws.write(message);
+            }
+
         }
     } catch (beast::system_error const& se) {
         // This indicates that the session was closed
@@ -54,6 +73,7 @@ do_session(tcp::socket socket)
         std::cerr << "Error: " << e.what() << std::endl;
     }
 }
+
 
 //------------------------------------------------------------------------------
 
