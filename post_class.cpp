@@ -48,7 +48,7 @@ string Post::get_event_type(){
             return("Campus Event");
             break;
         default:
-            return ("Error"):
+            return ("Error");
     }
 }
 
