@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 
+
 using namespace std;
 
 //Exception in case that no title is given as input
@@ -53,6 +54,7 @@ public:
     string get_owner();
     string get_title();
     string get_description();
+    string get_event_type();
     //unsigned long get_time();
     int get_upvote();
     int get_downvote();

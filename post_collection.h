@@ -11,7 +11,7 @@
 
 using namespace std;
 
-class DbFail : public std::exception {
+class DbPostFail : public std::exception {
 public:
     char *what();
 };
@@ -19,8 +19,9 @@ class post_collection {
 private:
 
 public:
-    int createDB(string dbName);
-    int storeToDB(Post post);
+    int createPostDB();
+    int createPostTable();
+    int storeToPostDB(Post post);
     vector<Post> getPostFromOwner(string postOwner);
     vector<Post> getPostFromEvent(eventType event);
     vector<Post> getAllPosts();
