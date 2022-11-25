@@ -16,12 +16,19 @@ public:
     char *what();
 };
 
+enum eventType {
+    Nightlife,
+    Special,
+    House,
+    Campus
+};
 
 class Post {
 private:
     string owner;
     string title;
     string description;
+    eventType event;
 
     //Value to store time since creation of post
     //const unsigned long creation_time;
@@ -40,7 +47,7 @@ private:
 
 public:
     //Constructor (owner, title, description)
-    Post(string owner, string title, string description);
+    Post(string owner, string title, string description, int type);
 
     //Getters
     string get_owner();
@@ -58,4 +65,5 @@ public:
     void upvote();
     void downvote();
 
+    string get_event_type();
 };

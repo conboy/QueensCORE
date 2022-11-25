@@ -12,12 +12,13 @@ char* MissingDescription::what() {
 }
 
 
-Post::Post(string own, string t, string d){
-    if (t == "\0" || t== "\n") throw MissingTitle();
-    if (d == "\0" || d == "\n") throw MissingDescription();
+Post::Post(string own, string t, string d, int type){
+    if (t == "\0" || t== "\n" || t.size() == 1) throw MissingTitle();
+    if (d == "\0" || d == "\n" || d.size() == 1) throw MissingDescription();
     owner = own;
     title = t;
     description = d;
+    event = (eventType)type;
     num_comments = 0;
     down = 0;
     up = 0;
@@ -32,6 +33,24 @@ int Post::get_upvote() {return up;}
 int Post::get_downvote() {return down;}
 vector<string> Post::get_comment(){ return com;}
 vector<string> Post::get_comment_owner() {return com_owner;}
+string Post::get_event_type(){
+    switch(event){
+        case 0:
+            return ("Nightlife");
+            break;
+        case 1:
+            return ("Special Event");
+            break;
+        case 2:
+            return ("House Party");
+            break;
+        case 3:
+            return("Campus Event");
+            break;
+        default:
+            return ("Error"):
+    }
+}
 
 void Post::comment(string own, string c) {
     com.push_back(c);
