@@ -1,10 +1,12 @@
 #include <boost/beast/core.hpp>
 #include <boost/beast/websocket.hpp>
+#include <boost/asio/ip/tcp.hpp>
+#include <cstdlib>
+#include <functional>
 #include <iostream>
 #include <string>
 #include <thread>
-// g++ -I /usr/include/boost -pthread main.cpp -o server
-// ./server
+
 namespace beast = boost::beast;         // from <boost/beast.hpp>
 namespace http = beast::http;           // from <boost/beast/http.hpp>
 namespace websocket = beast::websocket; // from <boost/beast/websocket.hpp>
@@ -13,75 +15,77 @@ using tcp = boost::asio::ip::tcp;       // from <boost/asio/ip/tcp.hpp>
 
 //------------------------------------------------------------------------------
 
+// Echoes back all received WebSocket messages
+void
+do_session(tcp::socket socket)
+{
+    try {
+        // Construct the stream by moving in the socket
+        websocket::stream<tcp::socket> ws{ std::move(socket) };
+
+        // Set a decorator to change the Server of the handshake
+        ws.set_option(websocket::stream_base::decorator(
+                [](websocket::response_type& res) {
+                    res.set(http::field::server,
+                            std::string(BOOST_BEAST_VERSION_STRING) +
+                            " websocket-server-sync");
+                }));
+
+        // Accept the websocket handshake
+        ws.accept();
+
+        for (;;) {
+            // This buffer will hold the incoming message
+            beast::flat_buffer buffer;
+
+            // Read a message
+            ws.read(buffer);
+            std::cout << "receive buffer size:" << buffer.size() << std::endl;
+
+            // Echo the message back
+            ws.text(ws.got_text());
+            ws.write(buffer.data());
+        }
+    } catch (beast::system_error const& se) {
+        // This indicates that the session was closed
+        if (se.code() != websocket::error::closed)
+            std::cerr << "Error: " << se.code().message() << std::endl;
+    } catch (std::exception const& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    }
+}
+
+//------------------------------------------------------------------------------
+
 int main(int argc, char* argv[])
 {
+    try {
+        auto const address = net::ip::make_address("127.0.0.1");
+        auto const port = static_cast<unsigned short>(2236);
 
-        auto const address = net::ip::make_address("172.105.111.5");
-        auto const port = static_cast<unsigned short>(std::atoi("443"));
+        // The io_context is required for all I/O
+        net::io_context ioc{ 1 };
 
-        net::io_context ioc{1};
+        // The acceptor receives incoming connections
+        tcp::acceptor acceptor{ ioc, {address, port} };
+        std::cout << "server listen port:" << port << std::endl;
+        for (;;) {
+            // This will receive the new connection
+            tcp::socket socket{ ioc };
 
-        tcp::acceptor acceptor{ioc, {address, port}};
-        for(;;)
-        {
-
-            tcp::socket socket{ioc};
-
+            // Block until we get a connection
             acceptor.accept(socket);
+            std::cout << "new session coming, address:"
+                      << socket.remote_endpoint().address().to_string()
+                      << ", port:" << socket.remote_endpoint().port() << std::endl;
 
-            std::thread{std::bind(
-                //[q = std::move(socket)]() mutable { // socket will be const - mutable should be used
-                [q{std::move(socket)}]() { // socket will be const - mutable should be used
-                     
-                
-                     
-                websocket::stream<tcp::socket> ws{std::move(const_cast<tcp::socket&>(q))};
-                    
-                // Set a decorator to change the Server of the handshake
-                // no need to set. It ıs not necessary
-                ws.set_option(websocket::stream_base::decorator(
-                    [](websocket::response_type& res)
-                    {
-                        res.set(http::field::server,
-                        std::string(BOOST_BEAST_VERSION_STRING) +
-                            " websocket-server-sync");
-                                }));
-
-                        // Accept the websocket handshake
-                        ws.accept();
-
-                        while(true)
-                        {
-                            try
-                            {
-                                       
-                            // This buffer will hold the incoming message
-                            // buffer types https://www.boost.org/doc/libs/1_75_0/libs/beast/doc/html/beast/using_io/buffer_types.html
-                            // check for the best one
-                            //beast::multi_buffer buffer;
-                            beast::flat_buffer buffer;
-
-                            // Read a message
-                            ws.read(buffer);
-
-                            auto out = beast::buffers_to_string(buffer.cdata());
-                            std::cout << out << std::endl;
-
-                            // Echo the message back
-                            //ws.text(ws.got_text());
-                            //bost::beast::ostream(buffer) << "something";
-                            ws.write(buffer.data());
-                            }
-                            catch(beast::system_error const& se)
-                            {
-                                if(se.code() != websocket::error::closed)
-                                {
-                                    std::cerr << "Error: " << se.code().message() << std::endl;
-                                    break;
-                                }
-                            }
-                        }
-                }
-            )}.detach();
+            // Launch the session, transferring ownership of the socket
+            std::thread(
+                    &do_session,
+                    std::move(socket)).detach();
         }
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+        return EXIT_FAILURE;
+    }
 }
