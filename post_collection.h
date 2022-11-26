@@ -5,26 +5,28 @@
 #ifndef QUEENSCORE_POST_COLLECTION_H
 #include "sqlite3.h"
 #include "post_class.h"
-#include <exception>
+
 
 #define QUEENSCORE_POST_COLLECTION_H
 
 using namespace std;
 
+
+
 class DbPostFail : public std::exception {
 public:
     char *what();
 };
-class post_collection {
+class PostCollection {
 private:
-
+    vector<Post> selectedPosts;
+    int numSelectedPosts;
 public:
-    int createPostDB();
-    int createPostTable();
-    int storeToPostDB(Post post);
-    vector<Post> getPostFromOwner(string postOwner);
-    vector<Post> getPostFromEvent(eventType event);
-    vector<Post> getAllPosts();
+    int createPostDB(const char* s);
+    int createPostTable(const char* s);
+    int storeToPostDB(const char* s, Post post);
+    int selectPostData(const char* s);
+    int deleteData(const char* s, string column, string del);
 };
 
 

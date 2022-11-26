@@ -1,6 +1,8 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
+#include <stdio.h>
 
 
 using namespace std;
@@ -67,5 +69,5 @@ public:
     void upvote();
     void downvote();
 
-    string get_event_type();
+
 };
