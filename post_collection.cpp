@@ -100,9 +100,12 @@ int PostCollection::storeToPostDB(const char* s, Post post) {
     return 0;
 }
 
-static int callback(void* notUsed, int argc, char** argv, char** azColName){
-    for (int i = 0; i < argc; i++){
-        cout << azColName[i] << ": " << argv[i] << endl;
+int callback(void* notUsed, int argc, char** argv, char** azColName){
+    if (argc <= 0) cout << "Empty DB" << endl;
+    else {
+        for (int i = 0; i < argc; i++) {
+            cout << azColName[i] << ": " << argv[i] << endl;
+        }
     }
     cout << endl;
     return 0;

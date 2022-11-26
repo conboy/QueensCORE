@@ -22,12 +22,18 @@ private:
     vector<Post> selectedPosts;
     int numSelectedPosts;
 public:
-    int createPostDB(const char* s);
-    int createPostTable(const char* s);
-    int storeToPostDB(const char* s, Post post);
-    int selectPostData(const char* s);
-    int deleteData(const char* s, string column, string del);
-};
+    int createPostDB(const char *s);
 
+    int createPostTable(const char *s);
+
+    int storeToPostDB(const char *s, Post post);
+
+    int selectPostData(const char *s);
+
+    int deleteData(const char *s, string column, string del);
+
+    void appendPost (Post post);
+
+};
 
 #endif //QUEENSCORE_POST_COLLECTION_H
