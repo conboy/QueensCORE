@@ -24,15 +24,42 @@ char* WrongEmail::what(){
 
 //constructors
 profile::profile(string mail, string user, string pass) {
+    int spec = 0;
+    int nums = 0;
+    int count = 0;
+
+    string num = "1234567890";
+
+    //check that there is something entered into each field
     if(mail == "\0" || mail == "\n") throw MissingEmail();
     if(user == "\0" || user == "\n") throw MissingUser();
     if(pass == "\0" || pass == "\n") throw MissingPassword();
+
+    //verify that the entered email is of "@queensu.ca" domain
     if(mail.substr(mail.length() - 11) != "@queensu.ca") throw WrongEmail();
+    if(user.size() < 3 || user.size() > 12) throw WrongUser();
+
+    for(int i = 0; i < pass.size(); i++){
+        if(pass[i] == '#' || pass[i] == '!' || pass[i] == '?') {
+            spec++;
+            count++;
+        } //verify special characters
+
+            //verify numbers in password
+
+        else count++; //verify some character does exist, update count
+    }
+
+    if(count > 12 || count < 3 || nums < 2 || spec < 1){
+        throw WrongPass();
+    }
 
     email = mail;
     username = user;
     password = pass;
-    //selfPost set to empty vector in fields
+    //field to store image
+
+    //store in sql
 }
 
 //---------------------------------------------------------------------------------------------------------------------
@@ -59,59 +86,27 @@ void profile::makePost(string y, string z) {
 
 
 //change the username of user
-int profile::change_username() {
-    string new_user;
-    string verify;
+int profile::change_username(string newUser) {
+    if(newUser.size() < 3 || newUser.size() > 12) throw WrongUser();
 
-    cout << "Please enter your password: ";
-    cin >> verify;
-
-    if(verify == password){//if password verified, username is changed
-        cout << "Please enter your new username: ";
-        cin >> new_user;
-        username = new_user;
-        return 0;
-
-    }
-    else if(verify == "0"){ //indicates user wnants to end username changing
-        return 0;
-    }
-
-    else{ //loops to continue to attemot to change username
-        cout<< "Incorrect password given. Try again. To end process, enter 0";
-        change_username();
+    else{ //change username if verified
+        username = newUser;
     }
 
 }
 //change the password of user
-int profile::change_password() {
-    string new_password;
-    string verify;
+int profile::change_password(string newPass) {
+    int count;
+    int spec;
+    for(int i = 0; i < newPass.size(); i++){
+        if(newPass[i] == '#' || newPass[i] == '!' || newPass[i] == '?') {
+            spec++;
+            count++;
+        } //verify special characters
 
-    cout << "Please enter your current password: ";
-    cin >> verify;
+            //verify numbers in password
 
-    if(verify == password){ //if correct password given, passord is changed by user
-        cout << "Please enter your new password: ";
-        cin >> new_password;
-
-        if(password == new_password){ //checks for duplicate password
-            cout << "New password cannot be same as old password. Ending process";
-            return 0;
-        }
-
-        else{ //if not duplicate, changes to given password
-            password = new_password;
-            return 0;
-        }
-    }
-    else if(verify == "0"){ //indicates user wants to give up trying to change password
-        return 0;
-    }
-
-    else{ //incorrect password given, loops to try again
-        cout<< "Incorrect password given. Try again. To end process, enter 0";
-        change_password();
+        else count++; //verify some character does exist, update count
     }
 
 }

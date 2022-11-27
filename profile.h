@@ -13,26 +13,36 @@
 using namespace std;
 //error checking classes
 
+//error classes for missing inputs
 class MissingUser : public std::exception{
 public:
     char *what();
 };
-
 class MissingEmail : public std::exception{
 public:
     char *what();
 
 };
+class MissingPassword : public std::exception{
+public:
+    char *what();
+};
 
+//error classes for invlaid fields:
 class WrongEmail : public std::exception{
 public:
     char *what();
 
 };
-
-class MissingPassword : public std::exception{
+class BadPassword : public std::exception{
 public:
     char *what();
+
+};
+class BadUser : public std::exception{
+public:
+    char *what();
+
 };
 
 class profile {
@@ -40,7 +50,7 @@ private:
     string email;
     string username;
     string password;
-    vector<Post> selfPost;
+    //vector<Post> selfPost;
 
 
 public:
@@ -55,10 +65,14 @@ public:
 
 
     //profile altering functions
-    int change_username();
-    int change_password();
+    int change_username(string newProfile);
+    int change_password(string newPass);
     //cannot change email adress, as account is made based on email
-    void makePost(string y, string z);
+
+    //to be called to make a post; gets title and comment, auto adds user ID
+    //void makePost(string y, string z);
+    //gets all post with user's ID
+    //void getPosts();
 };
 
 
