@@ -6,8 +6,52 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+/* STYLING FOR THE NAVBAR */
+.navbar{
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  border-bottom: 3px solid rgb(92, 0, 0);
+}
+.navbar h1{
+  margin-left: px;
+}
 
+.navbar a:hover {
+  color: rgb(92, 0, 0);
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+}
+/* STYLING FOR THE NAVBAR */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Styling for the Sign in  */
+.signin .form{
+  align-items: left;
+  text-align: left;
+}
+.signin .Header h1{
+  /* size: ; */
+  padding-right: 0%;
+  padding-bottom: 25px;
+  color: #ffffff;
+}
+.signin {
+  border-radius: 4px;
+  margin-top: 15%;
+  margin-bottom: 100%;
+  padding-left: 100px;
+
+  margin-left: 100px;
+  margin-right: 100px;
+
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: rgb(92, 0, 0); 
+}
+/* Styling for the Sign in */
