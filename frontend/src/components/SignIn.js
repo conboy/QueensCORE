@@ -1,6 +1,3 @@
-import {useState } from 'react';
-
-
 
 const SignIn = () => {
 
@@ -14,7 +11,8 @@ const SignIn = () => {
     const SchoolName = "Queen's"
     return ( 
         <div className="signin">
-            
+            <div className="Header"><h1>Sign in</h1></div>
+            <h3>Create Account</h3>
             <div className="form">
                 <h1>Sign in</h1>   
                     <form>
