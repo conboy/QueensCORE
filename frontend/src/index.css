@@ -6,6 +6,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.navbar{
+  padding: 20px;
+  align-items: center;
+  display: flex;
+  border-bottom: 3px solid rgb(92, 0, 0);
+}
+.navbar h1{
+  margin-left: px;
+}
+
+.navbar a:hover {
+  color: rgb(92, 0, 0);
+}
+.navbar a {
+  margin-left: 16px;
+  text-decoration: none;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
