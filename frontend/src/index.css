@@ -5,9 +5,12 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: bisque;
+  background-image: url("SourceFiles/background.jpg");
 }
 /* STYLING FOR THE NAVBAR */
 .navbar{
+  background-color: #a3a3a3;
   padding: 20px;
   align-items: center;
   display: flex;
@@ -48,6 +51,12 @@ code {
   padding-right: 0%;
   padding-bottom: 25px;
   color: #ffffff;
+}
+.signin  h3{
+  
+  padding-right: 0%;
+  padding-bottom: 25px;
+  color: #a3a3a3;
 }
 .signin .form h1{
   
