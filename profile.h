@@ -50,10 +50,10 @@ private:
     string email;
     string username;
     string password;
-    //vector<Post> selfPost;
-
+    vector<Post> selfPost;
 
 public:
+
     //constructors
     profile(string mail, string user, string pass); //add field for image?
 
@@ -69,10 +69,9 @@ public:
     int change_password(string newPass);
     //cannot change email adress, as account is made based on email
 
-    //to be called to make a post; gets title and comment, auto adds user ID
-    //void makePost(string y, string z);
+    //to be called to make a post; gets title, comment, and type, auto adds user ID
+    void makePost(string x, string y, int z);
     //gets all post with user's ID
-    //void getPosts();
 };
 
 

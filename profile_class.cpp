@@ -1,5 +1,5 @@
 //
-// Created by ebutl on 2022-10-25.
+// Created by jmcor on 11/29/2022.
 //
 
 #include "profile.h"
@@ -44,7 +44,10 @@ profile::profile(string mail, string user, string pass) {
             spec++;
             count++;
         } //verify special characters
-
+        else if (pass[i] == '0' || pass[i] == '1' || pass[i] == '2' || pass[i] == '3' || pass[i] == '4' || pass[i] == '5' || pass[i] == '6' || pass[i] == '7' ||pass[i] == '8' || pass[i] == '9') {
+            nums++;
+            count++;
+        }
             //verify numbers in password
 
         else count++; //verify some character does exist, update count
@@ -91,7 +94,7 @@ int profile::change_username(string newUser) {
     else{ //change username if verified
         username = newUser;
     }
-
+    return 0;
 }
 //change the password of user
 int profile::change_password(string newPass) {
@@ -107,6 +110,6 @@ int profile::change_password(string newPass) {
 
         else count++; //verify some character does exist, update count
     }
-
+    return 0;
 }
 
