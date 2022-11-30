@@ -44,23 +44,30 @@ public:
     char *what();
 
 };
+class passConfirmError : public std::exception{
+public:
+    char *what();
+
+};
 
 class profile {
 private:
     string email;
     string username;
     string password;
-    //vector<Post> selfPost;
-
+    string confirmPassword;
+    vector<Post> selfPost;
 
 public:
+
     //constructors
-    profile(string mail, string user, string pass); //add field for image?
+    profile(string mail, string user, string pass, string confirmPass); //add field for image?
 
     //accessors
     string get_username();
     string get_email();
     string get_password();
+    string get_confirmPassword();
     vector<Post>get_self();
 
 
@@ -69,10 +76,9 @@ public:
     int change_password(string newPass);
     //cannot change email adress, as account is made based on email
 
-    //to be called to make a post; gets title and comment, auto adds user ID
-    //void makePost(string y, string z);
+    //to be called to make a post; gets title, comment, and type, auto adds user ID
+    void makePost(string x, string y, int z);
     //gets all post with user's ID
-    //void getPosts();
 };
 
 

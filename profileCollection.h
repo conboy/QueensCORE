@@ -10,14 +10,17 @@
 
 using namespace std;
 
-
+class DbProfileFail : public std::exception {
+public:
+    char *what();
+};
 class profileCollection {
 
     //how do we initalize database?
 
     int create_profileDB(const char *dbName);
-    int createProfileTable();
-    int storeToProfileDB(profile profile); //how is username passed? alter user create to include storeToPRofile?
+    int createProfileTable(const char *s);
+    int storeToProfileDB(const char *s, profile profile); //how is username passed? alter user create to include storeToPRofile?
 
     //function that gets all fields for use by website:
     /*
