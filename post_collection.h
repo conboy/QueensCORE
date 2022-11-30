@@ -43,7 +43,7 @@ public:
     int updateVotes(string title, int up, int down);
 
     int storeVectorPosts(vector<Post> post);
-
+//i
     int deleteData(int event);
 };
 
