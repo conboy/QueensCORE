@@ -66,8 +66,8 @@ public:
 
     //Posting Comment & up/downvoting
     void comment(string, string);
-    void upvote();
-    void downvote();
+    void upvote(int upvote);
+    void downvote(int downvote);
 
 
 };

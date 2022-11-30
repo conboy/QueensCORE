@@ -13,6 +13,7 @@ using namespace std;
 
 
 
+
 class DbPostFail : public std::exception {
 public:
     char *what();
@@ -20,7 +21,6 @@ public:
 class PostCollection {
 private:
     const char* s;
-    vector<Post> selectedPosts;
 
 
 public:
@@ -41,6 +41,12 @@ public:
     int selectPostDataAll();
 
     int updateVotes(string title, int up, int down);
+
+    int storeVectorPosts(vector<Post> post);
+
+    int deleteData(int event);
 };
+
+vector<Post> getSelectedData();
 
 #endif //QUEENSCORE_POST_COLLECTION_H
