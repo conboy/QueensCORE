@@ -39,7 +39,8 @@ int PostCollection::createPostTable() {
                  "DESCRIPTION TEXT NOT NULL, "
                  "EVENTTYPE   INT NOT NULL,"
                  "UPVOTE      INT NOT NULL,"
-                 "DOWNVOTE    INT NOT NULL);";
+                 "DOWNVOTE    INT NOT NULL,"
+                 "COMMENTS    TEXT NOT NULL);";
     try {
         int exit = 0;
         exit = sqlite3_open(s, &DB);
@@ -58,11 +59,11 @@ int PostCollection::createPostTable() {
     catch (const exception & e){
            cerr  << "Database table creation failed" << endl;
     }
-    sql = "CREATE TABLE IF NOT EXISTS COMMENTS("
-                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-                 "TITLE       TEXT NOT NULL"
-                 "COWNER      TEXT NOT NULL"
-                 "COMMENT     TEXT NOT NULL);";
+//    sql = "CREATE TABLE IF NOT EXISTS COMMENTS("
+//                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, "
+//                 "TITLE       TEXT NOT NULL"
+//                 "COWNER      TEXT NOT NULL"
+//                 "COMMENT     TEXT NOT NULL);";
 //    try {
 //        int exit = 0;
 //        exit = sqlite3_open(s, &DB);
@@ -102,13 +103,12 @@ int PostCollection::storeToPostDB(Post post) {
     int upvote = post.get_upvote();
     int downvote = post.get_downvote();
 
-    vector<string> cowner = post.get_comment_owner();
-    vector<string> comment = post.get_comment_owner();
+    string comments = post.returnAllComments();
 
     string seperator ("','");
     string end ("');");
 
-    string sql("INSERT INTO POSTS (OWNER, TITLE, DESCRIPTION, EVENTTYPE, UPVOTE, DOWNVOTE) VALUES ('");
+    string sql("INSERT INTO POSTS (OWNER, TITLE, DESCRIPTION, EVENTTYPE, UPVOTE, DOWNVOTE, COMMENTS) VALUES ('");
     sql.append(owner);
     sql.append(seperator);
     sql.append(title);
@@ -120,6 +120,8 @@ int PostCollection::storeToPostDB(Post post) {
     sql.append(to_string(upvote));
     sql.append(seperator);
     sql.append(to_string(downvote));
+    sql.append(seperator);
+    sql.append(comments);
     sql.append(end);
 
     exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
@@ -173,6 +175,7 @@ int callback(void* notUsed, int argc, char** argv, char** azColName){
         int down = stoi(downv);
         temp.upvote(up);
         temp.downvote(down);
+        temp.setAllComments(argv[7]);
         selectedData.push_back(temp);
     }
     return 0;
