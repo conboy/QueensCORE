@@ -44,23 +44,30 @@ public:
     char *what();
 
 };
+class passConfirmError : public std::exception{
+public:
+    char *what();
+
+};
 
 class profile {
 private:
     string email;
     string username;
     string password;
+    string confirmPassword;
     vector<Post> selfPost;
 
 public:
 
     //constructors
-    profile(string mail, string user, string pass); //add field for image?
+    profile(string mail, string user, string pass, string confirmPass); //add field for image?
 
     //accessors
     string get_username();
     string get_email();
     string get_password();
+    string get_confirmPassword();
     vector<Post>get_self();
 
 

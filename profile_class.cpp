@@ -20,10 +20,14 @@ char* WrongEmail::what(){
     return (char *) "Please enter a valid email ending in \"@queensu.ca\"";
 }
 
+char* passConfirmError::what(){
+    return (char *) "Password confirmation does not match";
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 
 //constructors
-profile::profile(string mail, string user, string pass) {
+profile::profile(string mail, string user, string pass, string confirmPass) {
     int spec = 0;
     int nums = 0;
     int count = 0;
@@ -57,9 +61,14 @@ profile::profile(string mail, string user, string pass) {
         throw BadPassword();
     }
 
+    if (pass != confirmPass) {
+        throw passConfirmError();
+    }
+
     email = mail;
     username = user;
     password = pass;
+    confirmPassword = confirmPass;
     //field to store image
 
     //store in sql
@@ -73,6 +82,8 @@ string profile::get_username(){ return username;}
 string profile::get_email() { return email;}
 
 string profile::get_password() { return password;}
+
+string profile::get_confirmPassword() { return confirmPassword;}
 
 vector<Post> profile::get_self(){ return selfPost;}
 
