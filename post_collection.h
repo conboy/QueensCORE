@@ -19,21 +19,28 @@ public:
 };
 class PostCollection {
 private:
+    const char* s;
     vector<Post> selectedPosts;
-    int numSelectedPosts;
+
+
 public:
-    int createPostDB(const char *s);
+    PostCollection(const char* dir);
 
-    int createPostTable(const char *s);
+    int createPostDB();
 
-    int storeToPostDB(const char *s, Post post);
+    int createPostTable();
 
-    int selectPostData(const char *s);
+    int storeToPostDB(Post post);
 
-    int deleteData(const char *s, string column, string del);
+    int selectPostDataEvent(int event);
 
-    void appendPost (Post post);
+    int selectPostDataOwner(string ownerName);
 
+    int deleteData(string column, string del);
+
+    int selectPostDataAll();
+
+    int updateVotes(string title, int up, int down);
 };
 
 #endif //QUEENSCORE_POST_COLLECTION_H

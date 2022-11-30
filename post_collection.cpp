@@ -9,7 +9,9 @@ char* DbPostFail::what(){
     return (char *) "Database creation or access failed.";
 }
 
-int PostCollection::createPostDB(const char* s){
+PostCollection::PostCollection(const char* dir): s(dir){}
+
+int PostCollection::createPostDB(){
 
     sqlite3* DB;
     int exit = 0;
@@ -24,7 +26,7 @@ int PostCollection::createPostDB(const char* s){
     return exit;
 }
 
-int PostCollection::createPostTable(const char* s) {
+int PostCollection::createPostTable() {
 
     sqlite3* DB;
 
@@ -57,7 +59,7 @@ int PostCollection::createPostTable(const char* s) {
     return 0;
 }
 
-int PostCollection::storeToPostDB(const char* s, Post post) {
+int PostCollection::storeToPostDB(Post post) {
     sqlite3* DB;
     char* messageError;
 
@@ -111,7 +113,7 @@ int callback(void* notUsed, int argc, char** argv, char** azColName){
     return 0;
 }
 
-int PostCollection::selectPostData(const char *s) {
+int PostCollection::selectPostDataAll() {
     sqlite3* DB;
     char* errorMessage;
     string sql = "SELECT * FROM POSTS;";
@@ -130,7 +132,62 @@ int PostCollection::selectPostData(const char *s) {
     return 0;
 }
 
-int PostCollection::deleteData(const char *s, string column, string del) {
+int PostCollection::selectPostDataEvent(int event) {
+    sqlite3* DB;
+    char* errorMessage;
+    string sql = "SELECT * FROM POSTS WHERE EVENTTYPE = '";
+    switch (event){
+        case (0):
+            sql.append("Nightlife");
+            break;
+        case(1):
+            sql.append("Special Event");
+            break;
+        case(2):
+            sql.append("House Party");
+            break;
+        case(3):
+            sql.append("Campus Event");
+            break;
+    }
+    sql.append("';");
+
+    int exit = sqlite3_open(s, &DB);
+
+    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, &errorMessage);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error in selecting data" << endl;
+        sqlite3_free(errorMessage);
+        throw DbPostFail();
+    } else {
+        cout << "Successfully selected data" << endl;
+    }
+    return 0;
+}
+
+int PostCollection::selectPostDataOwner(string owner) {
+    sqlite3* DB;
+    char* errorMessage;
+    string sql = "SELECT * FROM POSTS WHERE OWNER = '";
+    sql.append(owner);
+    sql.append("';");
+
+    int exit = sqlite3_open(s, &DB);
+
+    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, &errorMessage);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error in selecting data" << endl;
+        sqlite3_free(errorMessage);
+        throw DbPostFail();
+    } else {
+        cout << "Successfully selected data" << endl;
+    }
+    return 0;
+}
+
+int PostCollection::deleteData(string column, string del) {
     sqlite3* DB;
     char* errorMessage;
     string sql = "DELETE FROM POSTS WHERE ";
@@ -150,6 +207,33 @@ int PostCollection::deleteData(const char *s, string column, string del) {
         throw DbPostFail();
     } else {
         cout << "Successfully deleted " << del << " from database" << endl;
+    }
+    return 0;
+}
+
+int PostCollection::updateVotes(string title, int up, int down){
+    sqlite3* DB;
+    char* errorMessage;
+    string sql = "UPDATE POSTS SET UPVOTE = '";
+    sql.append(to_string(up));
+    sql.append("', DOWNVOTE = '");
+    sql.append(to_string(down));
+    sql.append("' WHERE TITLE = '");
+    sql.append(title);
+    sql.append("';");
+
+    int exit = sqlite3_open(s, &DB);
+
+    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, &errorMessage);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error in updating vote data" << endl;
+        sqlite3_free(errorMessage);
+        throw DbPostFail();
+    } else {
+        cout << "\nSucessfully changed \nupvotes to: " << up << endl;
+        cout << "downvotes to: " << down << endl;
+        cout << "For post with title" << title << endl;
     }
     return 0;
 }
