@@ -58,8 +58,8 @@ void Post::comment(string own, string c) {
     num_comments++;
 }
 
-void Post::upvote() {up++;}
-void Post::downvote(){down++;}
+void Post::upvote(int upvote) {up = upvote;}
+void Post::downvote(int downvote){down = downvote;}
 
 
 
