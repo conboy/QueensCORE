@@ -8,6 +8,7 @@
 #include "profile_class.h"
 #include "sqlite3.h"
 
+
 using namespace std;
 
 class DbProfileFail : public std::exception {

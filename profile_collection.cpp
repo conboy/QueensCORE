@@ -13,7 +13,7 @@ bool duplicate;
 char* DbProfileFail::what(){
     return (char *) "Database creation or access failed.";
 }
-profile_collection::profile_collection(const char *directory): s(directory) {duplicate = false;};
+profile_collection::profile_collection(const char *directory): s(directory) {};
 //creates new profile database
 int profile_collection::create_profileDB() {
     sqlite3* DB;
@@ -99,19 +99,16 @@ int profile_collection::storeToProfileDB(profile_class prof) {
     return 0;
 }
 
-int callback(void* notUsed, int argc, char** argv, char** azColName){
+int callbackprofile(void* notUsed, int argc, char** argv, char** azColName) {
     if (argc <= 0) cout << "Empty DB" << endl;
     else {
-        if (argv[1] == dup)
+        if (dup == argv[1])
             duplicate = true;
         else duplicate = false;
     }
-    return 0;
 }
 
-bool returnDuplicateCheck(){
-    return duplicate;
-}
+
 
 bool profile_collection::checkForProfile(const string username) {
     dup = username;
@@ -123,7 +120,8 @@ bool profile_collection::checkForProfile(const string username) {
 
     int exit = sqlite3_open(s, &DB);
 
-    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, &errorMessage);
+
+    exit = sqlite3_exec(DB, sql.c_str(), callbackprofile, NULL, &errorMessage);
 
     if (exit != SQLITE_OK) {
         cerr << "Error in selecting data" << endl;
