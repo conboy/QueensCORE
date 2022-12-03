@@ -1,7 +1,8 @@
 
 
-#include "profileCollection.h"
-#include "profile.h"
+#include "profile_collection.h"
+#include "profile_class.h"
+
 #include <iostream>
 
 using namespace std;
@@ -9,8 +10,9 @@ using namespace std;
 char* DbProfileFail::what(){
     return (char *) "Database creation or access failed.";
 }
+profile_collection::profile_collection(const char *directory): s(directory) {};
 //creates new profile database
-int profileCollection::create_profileDB(const char *s) {
+int profile_collection::create_profileDB() {
     sqlite3* DB;
     int exit = 0;
 
@@ -25,7 +27,7 @@ int profileCollection::create_profileDB(const char *s) {
 }
 
 //creates an empty table for holding profiles
-int profileCollection::createProfileTable(const char* s) {
+int profile_collection::createProfileTable() {
 
     sqlite3* DB;
 
@@ -57,44 +59,8 @@ int profileCollection::createProfileTable(const char* s) {
     return 0;
 }
 
-//int profileCollection::createProfilePostsTable(const char *s) {
-//
-//    sqlite3* DB;
-//
-//    string sql = "CREATE TABLE IF NOT EXISTS POSTS("
-//                 "ID INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                 "OWNER       TEXT NOT NULL, "
-//                 "TITLE       TEXT NOT NULL, "
-//                 "DESCRIPTION TEXT NOT NULL, "
-//                 "EVENTTYPE   TEXT NOT NULL,"
-//                 "UPVOTE      INT NOT NULL,"
-//                 "DOWNVOTE    INT NOT NULL);";
-//    try {
-//        int exit = 0;
-//        exit = sqlite3_open(s, &DB);
-//        char *messageError;
-//
-//        exit = sqlite3_exec(DB, sql.c_str(), NULL, 0, &messageError);
-//
-//        if (exit != SQLITE_OK) {
-//            sqlite3_free(messageError);
-//            throw DbPostFail();
-//        } else {
-//            sqlite3_close(DB);
-//            cout << "Created DB Table successfully" << endl;
-//        }
-//    }
-//    catch (const exception & e){
-//        cerr  << "Database table creation failed" << endl;
-//    }
-//    return 0;
-//}
-
-
-
-
 //add a created profiles details to the database
-int profileCollection::storeToProfileDB(const char *s, profile prof) {
+int profile_collection::storeToProfileDB(profile_class prof) {
 
     sqlite3* DB;
     char* messageError;

@@ -19,7 +19,7 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(Boost)
 
 # Create executable called QueensCore that includes the following executables
-add_executable(QueensCore main.cpp post_class.h post_class.cpp sqlite3.h sqlite3.c post_collection.cpp post_collection.h)
+add_executable(QueensCore main.cpp profile_class.cpp profile_class.h post_class.h post_class.cpp sqlite3.h sqlite3.c post_collection.cpp post_collection.h profile_collection.cpp profile_collection.h)
 
 # Link the following libraries to the executable
 target_link_libraries(QueensCore PUBLIC ws2_32 PRIVATE Boost::beast)

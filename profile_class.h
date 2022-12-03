@@ -9,6 +9,7 @@
 #include <vector>
 #include <iostream>
 #include "post_class.h"
+#include "sqlite3.h"
 
 using namespace std;
 //error checking classes
@@ -50,7 +51,7 @@ public:
 
 };
 
-class profile {
+class profile_class {
 private:
     string email;
     string username;
@@ -61,7 +62,7 @@ private:
 public:
 
     //constructors
-    profile(string mail, string user, string pass, string confirmPass); //add field for image?
+    profile_class(string mail, string user, string pass, string confirmPass); //add field for image?
 
     //accessors
     string get_username();
@@ -71,7 +72,7 @@ public:
     vector<Post>get_self();
 
 
-    //profile altering functions
+    //profile_class altering functions
     int change_username(string newProfile);
     int change_password(string newPass);
     //cannot change email adress, as account is made based on email

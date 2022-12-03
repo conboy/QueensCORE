@@ -2,7 +2,7 @@
 // Created by jmcor on 11/29/2022.
 //
 
-#include "profile.h"
+#include "profile_class.h"
 //errors
 char* MissingUser::what(){
     return (char*)"Please input a username";
@@ -27,7 +27,7 @@ char* passConfirmError::what(){
 //----------------------------------------------------------------------------------------------------------------------
 
 //constructors
-profile::profile(string mail, string user, string pass, string confirmPass) {
+profile_class::profile_class(string mail, string user, string pass, string confirmPass) {
     int spec = 0;
     int nums = 0;
     int count = 0;
@@ -77,21 +77,21 @@ profile::profile(string mail, string user, string pass, string confirmPass) {
 //---------------------------------------------------------------------------------------------------------------------
 
 //accessors
-string profile::get_username(){ return username;}
+string profile_class::get_username(){ return username;}
 
-string profile::get_email() { return email;}
+string profile_class::get_email() { return email;}
 
-string profile::get_password() { return password;}
+string profile_class::get_password() { return password;}
 
-string profile::get_confirmPassword() { return confirmPassword;}
+string profile_class::get_confirmPassword() { return confirmPassword;}
 
-vector<Post> profile::get_self(){ return selfPost;}
+vector<Post> profile_class::get_self(){ return selfPost;}
 
 //---------------------------------------------------------------------------------------------------------------------
 
 //field editors
-//add posts made by profile to its log
-void profile::makePost(string x, string y, int z) {
+//add posts made by profile_class to its log
+void profile_class::makePost(string x, string y, int z) {
     Post toAdd = Post(username, x, y, z);
     selfPost.push_back(toAdd);
 }
@@ -99,7 +99,7 @@ void profile::makePost(string x, string y, int z) {
 
 
 //change the username of user
-int profile::change_username(string newUser) {
+int profile_class::change_username(string newUser) {
     if(newUser.size() < 3 || newUser.size() > 12) throw BadUser();
 
     else{ //change username if verified
@@ -108,7 +108,7 @@ int profile::change_username(string newUser) {
     return 0;
 }
 //change the password of user
-int profile::change_password(string newPass) {
+int profile_class::change_password(string newPass) {
     int count;
     int spec;
     for(int i = 0; i < newPass.size(); i++){

@@ -7,7 +7,10 @@
 #include <iostream>
 #include <string>
 #include <thread>
+#include "profile_class.h"
+#include "profile_collection.h"
 
+profile_collection profiledb("C:\\Users\\conrad\\team-17-indian\\db\\Profile.db");
 using namespace std;
 using namespace boost::beast;
 using namespace boost::asio;
@@ -51,17 +54,91 @@ do_session(tcp::socket socket)
             // Print the client message to terminal
             cout << client_message << endl;
             // Do logic on the message
-            if (client_message == "register") {
-                // Send a message back
-                const_buffer message("Hello, world!", 13);
+
+            // Turn message into an array delimited by  :
+            // create array
+            int array_size = count(client_message.begin(), client_message.end(), ':') + 1;
+            string message_array[array_size];
+
+            // split up message into array
+            int i =0;
+            string del = ":";
+            int start, end = -1*del.size();
+            do {
+                start = end + del.size();
+                end = client_message.find(del, start);
+                message_array[i] = client_message.substr(start, end - start);
+                i++;
+                //cout << client_message.substr(start, end - start) << endl;
+            } while (end != -1);
+
+            string message_type = message_array[0];
+
+            // TODO: Sign in
+            if (message_type == "sigin") {
+
+            }
+
+            // TODO: Create post
+            if (message_type == "createpost") {
+
+            }
+            // TODO: Add comment
+            if (message_type == "sigin") {
+
+            }
+            // TODO: Edit profile_class
+            if (message_type == "sigin") {
+
+            }
+            // TODO: up vote
+            if (message_type == "sigin") {
+
+            }
+            // TODO: downvote
+            if (message_type == "sigin") {
+
+            }
+            // TODO: Finish register
+            if (message_type == "register") {
+                // Message to send to client
+                const_buffer registerfail("Unable to make account", 22);
+                const_buffer registerpass("Account Created", 15);
+                bool isCreated = false;
+                // get parameters
+                string mail = message_array[1];
+                string user = message_array[2];
+                string pass = message_array[3];
+                string confirmPass = message_array[4];
+                // try to create user
+                try {
+                    try{
+                        profile_class profile(mail, user, pass, confirmPass);
+                        // send to database
+                        profiledb.storeToProfileDB(profile);
+                        isCreated = true;
+                    }
+                    catch (profile_class) {
+                        cout << "Unable to make account" << endl;
+                        const_buffer message("Unable to make account", 22);
+                    }
+
+                }
+                catch (...){
+                    cout << "Unable to make account" << endl;
+                    const_buffer message("Unable to make account", 22);
+                }
+
+
 
                 // This sets all outgoing messages to be sent as text.
                 // Text messages must contain valid utf8, this is checked
                 // when reading but not when writing.
                 ws.text(true);
 
-                // Write the buffer as text
-                ws.write(message);
+                // Send a message back saying if the account was created
+                if (isCreated == true) ws.write(registerpass);
+                else ws.write(registerfail);
             }
 
         }
@@ -79,6 +156,11 @@ do_session(tcp::socket socket)
 
 int main(int argc, char* argv[])
 {
+    //Testing creeation
+    profiledb.create_profileDB();
+    profiledb.createProfileTable();
+    profile_class profile_class("19cjf6@queensu.ca", "Conrad", "Password123#", "Password123#");
+
     try {
         auto const address = net::ip::make_address("127.0.0.1");
         auto const port = static_cast<unsigned short>(2236);
