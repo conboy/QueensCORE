@@ -4,9 +4,6 @@ import { BrowserRouter as Router,Link } from 'react-router-dom';
 
 var tempBio = "QMIND is Canada’s largest student-run organization. We empower undergraduate student’s at Queen’s University to tackle real-world problems through the use of artificial intelligence, machine learning, and various other disruptive technologies. Our organization spans over 200 members, 30+ design teams, a consulting stream, a published AI research wing, an incubator program, and a national-scale conference with 400+ delegates held annually in Toronto, ON.Our mandate is to lower the entry barriers preventing undergraduate students to work on complex problems using disruptive technologies. Since inception, our design teams have completed 150+ projects and our members have gone to work at North America’s largest including McKinsey, Microsoft, Google, Amazon, etc.";
 
-function logInputToString(document) {
-  return "login:"+document.getElementById("email").value+":"+document.getElementById("password").value;
-}
 
 
 class Posts {
@@ -29,10 +26,14 @@ var cat="Clubs";
 
 function Home(){
 
+    const ws =  new WebSocket('ws://127.0.0.1:2236');
 
+    function CommentInputToString(document){
+      // return "Add Comment:"+document.getElementById("Comment").value+
+    }
 
     const [name,setName]= useState('david');
-;
+
 
 
     const category="Clubs";
@@ -82,7 +83,7 @@ function Home(){
               <form >
                      <input type="text" placeholder='Comment' id="addComment"/>
               </form> 
-              <button>add comment</button>  
+              <button type="submit" onClick={() => ws.send(CommentInputToString(document))}>add comment</button>  
             </div>
           </div>
 
