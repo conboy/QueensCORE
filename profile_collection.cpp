@@ -113,7 +113,7 @@ bool returnDuplicateCheck(){
     return duplicate;
 }
 
-int profile_collection::checkForProfile(const string username) {
+bool profile_collection::checkForProfile(const string username) {
     dup = username;
     sqlite3* DB;
     char* errorMessage;
@@ -130,6 +130,7 @@ int profile_collection::checkForProfile(const string username) {
         sqlite3_free(errorMessage);
         throw DbProfileFail();
     }
-    return 0;
+
+    return duplicate;
 }
 
