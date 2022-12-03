@@ -71,6 +71,10 @@ void Post::setAllComments(string comments){
 void Post::upvote(int upvote) {up = upvote;}
 void Post::downvote(int downvote){down = downvote;}
 
+void Post::upvote(void) {up++;}
+void Post::downvote(void){down++;}
+
+
 
 
 

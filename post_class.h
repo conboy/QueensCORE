@@ -73,4 +73,7 @@ public:
     void setAllComments(string comments);
     string returnAllComments();
 
+    void upvote(void);
+
+    void downvote(void);
 };

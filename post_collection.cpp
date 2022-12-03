@@ -105,6 +105,8 @@ int PostCollection::storeToPostDB(Post post) {
 
     string comments = post.returnAllComments();
 
+    deleteDataTitle(title);
+
     string seperator ("','");
     string end ("');");
 
@@ -236,8 +238,27 @@ int PostCollection::selectPostDataOwner(string owner) {
     }
     return 0;
 }
+int PostCollection::selectPostDataTitle(const string title) {
+    selectedData.clear();
+    sqlite3* DB;
+    char* errorMessage;
+    string sql = "SELECT * FROM POSTS WHERE TITLE = '";
+    sql.append(title);
+    sql.append("';");
 
-int PostCollection::deleteData(string column, string del) {
+    int exit = sqlite3_open(s, &DB);
+
+    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, &errorMessage);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error in selecting data" << endl;
+        sqlite3_free(errorMessage);
+        throw DbPostFail();
+    }
+    return 0;
+}
+
+int PostCollection::deleteData(const string column,const string del) {
     sqlite3* DB;
     char* errorMessage;
     string sql = "DELETE FROM POSTS WHERE ";
@@ -259,11 +280,31 @@ int PostCollection::deleteData(string column, string del) {
     return 0;
 }
 
-int PostCollection::deleteData(int event) {
+int PostCollection::deleteData(const int event) {
     sqlite3* DB;
     char* errorMessage;
     string sql = "DELETE FROM POSTS WHERE EVENTTYPE = '";
     sql.append(to_string(event));
+    sql.append("';");
+
+
+    int exit = sqlite3_open(s, &DB);
+
+    exit = sqlite3_exec(DB, sql.c_str(), callback, NULL, &errorMessage);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error in deleting data" << endl;
+        sqlite3_free(errorMessage);
+        throw DbPostFail();
+    }
+    return 0;
+}
+
+int PostCollection::deleteDataTitle(const string title) {
+    sqlite3* DB;
+    char* errorMessage;
+    string sql = "DELETE FROM POSTS WHERE TITLE = '";
+    sql.append(title);
     sql.append("';");
 
 
@@ -300,4 +341,37 @@ int PostCollection::updateVotes(string title, int up, int down){
         throw DbPostFail();
     }
     return 0;
+}
+
+int PostCollection::upvote(const string title){
+    selectedData.clear();
+    int exit = selectPostDataTitle(title);
+    for (Post temp : selectedData){
+        temp.upvote();
+        storeToPostDB(temp);
+    }
+    selectedData.clear();
+    return exit;
+}
+
+int PostCollection::downvote(const string title){
+    selectedData.clear();
+    int exit = selectPostDataTitle(title);
+    for (Post temp : selectedData){
+        temp.downvote();
+        storeToPostDB(temp);
+    }
+    selectedData.clear();
+    return exit;
+}
+
+int PostCollection::comment(const string title, const string owner, const string comment){
+    selectedData.clear();
+    int exit = selectPostDataTitle(title);
+    for (Post temp : selectedData){
+        temp.comment(owner, comment);
+        storeToPostDB(temp);
+    }
+    selectedData.clear();
+    return exit;
 }

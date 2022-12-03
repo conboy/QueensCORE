@@ -36,15 +36,25 @@ public:
 
     int selectPostDataOwner(string ownerName);
 
-    int deleteData(string column, string del);
+    int deleteData(const string column, const string del);
 
     int selectPostDataAll();
 
-    int updateVotes(string title, int up, int down);
+    int updateVotes(const string title, int up, int down);
 
     int storeVectorPosts(vector<Post> post);
-//i
-    int deleteData(int event);
+
+    int deleteData(const int event);
+
+    int upvote(const string title);
+
+    int downvote(const string title);
+
+    int comment(const string title, const string comment_owner, const string comment);
+
+    int selectPostDataTitle(const string title);
+
+    int deleteDataTitle(const string title);
 };
 
 vector<Post> getSelectedData();
