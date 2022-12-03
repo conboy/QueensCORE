@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "post_class.h"
 #include "sqlite3.h"
 
 using namespace std;
@@ -57,7 +56,7 @@ private:
     string username;
     string password;
     string confirmPassword;
-    vector<Post> selfPost;
+
 
 public:
 
@@ -69,7 +68,6 @@ public:
     string get_email();
     string get_password();
     string get_confirmPassword();
-    vector<Post>get_self();
 
 
     //profile_class altering functions

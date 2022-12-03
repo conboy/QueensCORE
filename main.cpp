@@ -9,8 +9,11 @@
 #include <thread>
 #include "profile_class.h"
 #include "profile_collection.h"
+#include "post_collection.h"
+
 
 profile_collection profiledb("C:\\Users\\conrad\\team-17-indian\\db\\Profile.db");
+PostCollection postdb("C:\\Users\\conrad\\team-17-indian\\db\\Post.db");
 using namespace std;
 using namespace boost::beast;
 using namespace boost::asio;
@@ -75,31 +78,42 @@ do_session(tcp::socket socket)
             string message_type = message_array[0];
 
             // TODO: Sign in
-            if (message_type == "sigin") {
+            if (message_type == "signin") {
+                string mail = message_array[1];
+                string pass = message_array[2];
 
             }
 
-            // TODO: Create post
-            if (message_type == "createpost") {
+            // Create post
+            if (message_type == "post") {
+                try {
+                    string owner = message_array[1];
+                    string title = message_array[2];
+                    string description = message_array[3];
+                    int type = stoi(message_array[4]);
+
+                    Post post(owner, title, description, type);
+                    postdb.storeToPostDB(post);
+                }
+                catch (...){}
+
 
             }
             // TODO: Add comment
-            if (message_type == "sigin") {
+            if (message_type == "comment") {
 
             }
-            // TODO: Edit profile_class
-            if (message_type == "sigin") {
 
-            }
             // TODO: up vote
-            if (message_type == "sigin") {
+            if (message_type == "upvote") {
+                string title = message_array[1];
 
             }
             // TODO: downvote
-            if (message_type == "sigin") {
+            if (message_type == "downvote") {
 
             }
-            // TODO: Finish register
+            // Register an account
             if (message_type == "register") {
                 // Message to send to client
                 const_buffer registerfail("Unable to make account", 22);
@@ -156,11 +170,13 @@ do_session(tcp::socket socket)
 
 int main(int argc, char* argv[])
 {
-    //Testing creeation
+    // Create profile db
     profiledb.create_profileDB();
     profiledb.createProfileTable();
-    profile_class profile_class("19cjf6@queensu.ca", "Conrad", "Password123#", "Password123#");
 
+    // Create post db
+    postdb.createPostDB();
+    postdb.createPostTable();
     try {
         auto const address = net::ip::make_address("127.0.0.1");
         auto const port = static_cast<unsigned short>(2236);

@@ -19,7 +19,7 @@ int profile_collection::create_profileDB() {
     exit = sqlite3_open(s, &DB);
 
     if(exit) throw DbProfileFail();
-    else cout << "Successfuly created database" << endl;
+    else cout << "Successfully created database" << endl;
 
     sqlite3_close(DB);
 

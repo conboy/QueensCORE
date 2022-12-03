@@ -147,6 +147,7 @@ int PostCollection::storeToPostDB(Post post) {
 //       }
 //   }
     sqlite3_close(DB);
+    cout << "Posted successfully to database" << endl;
     return 0;
 }
 

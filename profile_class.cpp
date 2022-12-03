@@ -85,17 +85,8 @@ string profile_class::get_password() { return password;}
 
 string profile_class::get_confirmPassword() { return confirmPassword;}
 
-vector<Post> profile_class::get_self(){ return selfPost;}
 
 //---------------------------------------------------------------------------------------------------------------------
-
-//field editors
-//add posts made by profile_class to its log
-void profile_class::makePost(string x, string y, int z) {
-    Post toAdd = Post(username, x, y, z);
-    selfPost.push_back(toAdd);
-}
-
 
 
 //change the username of user
