@@ -5,6 +5,26 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("SourceFiles/background.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+
+}
+/* STYLING FOR THE NAVBAR */
+.navbar{
+  
+  background-color: #2e0101;
+  padding-left: 20px;
+  border-bottom: 8px solid rgb(92, 0, 0);
+  text-align: left;
+  display: flex;
+}
+.navbar h1{
+  
+  
+  font-size:30px;
+  color: #ffffff;
+  margin: auto;
 }
 .navbar{
   padding: 20px;
@@ -24,7 +44,113 @@ body {
   text-decoration: none;
 }
 
+.navbar a:hover {
+  color: rgb(255, 0, 0);
+}
+.navbar a {
+  color:#a35353;
+  text-align: start;
+  margin-left: 16px;
+  text-decoration: none;
+}
+.links{
+  margin-right: 80%;
+}
+
+/* STYLING FOR THE NAVBAR */
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Styling for the Sign in  */
+.signin .form{
+  float: left;
+  margin-top: auto;
+  align-items: left;
+  text-align: left;
+}
+.signin .form2{
+  padding-left: 400px;
+  margin-top: 8px;
+  align-items: left;
+  text-align: left;
+}
+.signin .form2 h1{
+  
+  padding-right: 0%;
+  padding-bottom: 25px;
+  color: #ffffff;
+}
+.signin  h3{
+  
+  padding-right: 0%;
+  padding-bottom: 25px;
+  color: #a3a3a3;
+}
+.signin .form h1{
+  
+  padding-right: 0%;
+  padding-bottom: 25px;
+  color: #ffffff;
+}
+
+.signin {
+  min-width: 800px;
+  width: 20%;
+  border-radius: 4px;
+  margin-top: 5%;
+  margin-bottom:auto;
+  margin-left:auto;
+  margin-right: auto;
+  padding-left: 100px;
+
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: rgb(92, 0, 0); 
+}
+/* Styling for the Sign in */
+/* Home Page  */
+.home h1{
+  font-size: 50px;
+  color:rgb(255, 255, 255);
+  font: 'Ubuntu';
+  display: inline-block;
+}
+
+.home {
+  background-color: rgb(92, 0, 0);
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
+}
+
+.comments{
+  background-color: #f0f0f0;
+}
+.posts{
+  margin: 4%;
+  background-color: #a1a1a1;
+  border: 3px solid rgb(0, 0, 0);
+  
+}
+.posts h3{
+  border-bottom: 2px solid rgb(92, 0, 0)
+}
+.posts button{
+  margin: 5px;
+}
+
+
+/* Home page Styling  */
+/* Create post styling  */
+.createPostPage{
+  background-color: #2e0101;
+  margin-top: 15%;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5%;
+  border: 4px #ffffff;
+}
+/* Create post styling  */
