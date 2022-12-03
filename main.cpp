@@ -81,7 +81,21 @@ do_session(tcp::socket socket)
             if (message_type == "signin") {
                 string mail = message_array[1];
                 string pass = message_array[2];
-                //profiledb.signin(mail, pass);
+                string username = profiledb.checkForProfile(mail, pass);
+                if (username == "$") {
+                    ws.text(true);
+                    const_buffer message("Unable to sign in account", 25);
+                    ws.write(message);
+                }
+                else {
+                    ws.text(true);
+                    const_buffer user(username.c_str(), strlen(username.c_str()));
+                    cout << sizeof(username.c_str()) << endl;
+                    cout << username.c_str() <<endl;
+                    cout << make_printable(user) << endl;
+                    ws.write(user);
+                }
+
             }
 
             // Create post

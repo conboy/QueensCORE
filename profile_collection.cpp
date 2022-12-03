@@ -111,6 +111,7 @@ int callbackprofile(void* notUsed, int argc, char** argv, char** azColName) {
 
 
 string profile_collection::checkForProfile(const string em, const string pw) {
+    duplicate = false;
     email = em;
     password = pw;
     sqlite3* DB;
@@ -123,7 +124,7 @@ string profile_collection::checkForProfile(const string em, const string pw) {
 
     exit = sqlite3_exec(DB, sql.c_str(), callbackprofile, NULL, &errorMessage);
 
-    if (duplicate = true) return user;
+    if (duplicate == true) return user;
     else return "$";
 }
 
