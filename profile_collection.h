@@ -25,7 +25,7 @@ public:
     int createProfileTable();
     int storeToProfileDB(profile_class profile); //how is username passed? alter user create to include storeToPRofile?
 
-    bool checkForProfile(const string username);
+    string checkForProfile(const string username, const string password);
 
     //function that gets all fields for use by website:
     /*

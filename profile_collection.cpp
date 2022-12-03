@@ -7,7 +7,7 @@
 
 using namespace std;
 
-string dup;
+string email, password, user;
 bool duplicate;
 
 char* DbProfileFail::what(){
@@ -102,33 +102,28 @@ int profile_collection::storeToProfileDB(profile_class prof) {
 int callbackprofile(void* notUsed, int argc, char** argv, char** azColName) {
     if (argc <= 0) cout << "Empty DB" << endl;
     else {
-        if (dup == argv[1])
-            duplicate = true;
+        user = argv[1];
+        if (argv[2] == password && argv[3] == email) duplicate = true;
         else duplicate = false;
     }
+    return 0;
 }
 
 
-
-bool profile_collection::checkForProfile(const string username) {
-    dup = username;
+string profile_collection::checkForProfile(const string em, const string pw) {
+    email = em;
+    password = pw;
     sqlite3* DB;
     char* errorMessage;
-    string sql = "SELECT * FROM PROFILES WHERE USER = '";
-    sql.append(username);
+    string sql = "SELECT * FROM PROFILES WHERE EMAIL = '";
+    sql.append(email);
     sql.append("';");
 
     int exit = sqlite3_open(s, &DB);
 
-
     exit = sqlite3_exec(DB, sql.c_str(), callbackprofile, NULL, &errorMessage);
 
-    if (exit != SQLITE_OK) {
-        cerr << "Error in selecting data" << endl;
-        sqlite3_free(errorMessage);
-        throw DbProfileFail();
-    }
-
-    return duplicate;
+    if (duplicate = true) return user;
+    else return "$";
 }
 
