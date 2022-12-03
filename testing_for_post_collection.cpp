@@ -7,35 +7,71 @@
 #include <iostream>
 
 int main (){
-    Post test1 ("Liam", "Test Post", "Testing if the post collection db works", 1);
-    Post test2 ("Salass", "Test Post 2", "Testing if the post collection db works", 1);
+    Post test1 ("Liam", "Test1", "Testing if the post collection db works", 0);
+    Post test2 ("Liam", "Test2", "Testing if the post collection db works", 0);
+    Post test3 ("Claire", "Test3", "Testing if the post collection db works", 0);
+    Post test4 ("Jonathon", "Test4", "Testing if the post collection db works", 1);
+    test1.comment("David", "is a lil bitch.");
+    test1.comment("Liam", " Is not a lil bitch.");
+
+
+    vector<Post> data;
+    data.push_back(test1);
+    data.push_back(test2);
+    data.push_back(test3);
+    data.push_back(test4);
 
     try {
-        PostCollection testdb;
         const char* dir = "C:\\Users\\liams\\CLionProjects\\team-17-indian\\Post.db";
+        PostCollection db(dir);
+
         //Testing creeation
-        testdb.createPostDB(dir);
-        testdb.createPostTable(dir);
+        db.createPostDB();
+        db.createPostTable();
         cout << endl;
 
+        //Storing the vector of Posts to the database
+        cout << "Storing these bitches";
+        db.storeVectorPosts(data);
 
 
-        //Testing storing a post to DB
-        testdb.storeToPostDB(dir, test1);
-        testdb.storeToPostDB(dir, test2);
-        cout << endl;
+        //Updating the votes in database
+        db.updateVotes("Test1", 5, 6);
 
-        //Testing delete data
-        testdb.deleteData(dir, "OWNER", "Salass");
-        cout << endl;
+        //Selecting all data with owner liam
+        db.selectPostDataOwner("Liam");
+        data = getSelectedData(); //Gettng all data wiht owner liam
 
-        //Testing Selecting data
-        testdb.selectPostData(dir);
 
-        testdb.deleteData(dir, "OWNER", "Liam");
-        cout << endl;
+        //Prints out all with owner Liam
+        for (Post temp : data){
+            cout << "Owner: " << temp.get_owner() << "\nTitle: " << temp.get_title() <<  endl;
+            cout << "Description: " << temp.get_description() << endl;
+            cout << "Upvotes: " << temp.get_upvote() << " | Downvotes: " << temp.get_downvote() << endl;
+            cout << "Event Type: " << temp.get_event_type() << endl;
+            cout << "All comment string: " << temp.returnAllComments() << endl;
+            cout << endl;
+        }
 
-        testdb.selectPostData(dir);
+
+        cout << "================================================================" << endl;
+        //Selecting all nightlife posts
+        db.selectPostDataEvent(0);
+        data = getSelectedData();  //Placing nightlife posts in vector
+
+        //Print all nightlife events
+        for (Post temp : data){
+            cout << "Owner: " << temp.get_owner() << "\nTitle: " << temp.get_title() <<  endl;
+            cout << "Description: " << temp.get_description() << endl;
+            cout << "Upvotes: " << temp.get_upvote() << " | Downvotes: " << temp.get_downvote() << endl;
+            cout << "Event Type: " << temp.get_event_type() << endl;
+            cout << "All comment string: " << temp.returnAllComments() << endl;
+            cout << endl;
+        }
+
+        //delete all the post data in db
+        db.deleteData(0);
+        db.deleteData(1);
 
 
     } catch (DbPostFail &e){

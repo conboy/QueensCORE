@@ -22,6 +22,7 @@ Post::Post(string own, string t, string d, int type){
     num_comments = 0;
     down = 0;
     up = 0;
+    allComments = "";
 }
 
 //Getters
@@ -51,15 +52,28 @@ string Post::get_event_type(){
             return ("Error");
     }
 }
+string Post::returnAllComments() {return allComments;}
 
 void Post::comment(string own, string c) {
     com.push_back(c);
     com_owner.push_back(own);
     num_comments++;
+    allComments.append(own);
+    allComments.append(": ");
+    allComments.append(c);
+    allComments.append("$ ");
 }
 
-void Post::upvote() {up++;}
-void Post::downvote(){down++;}
+void Post::setAllComments(string comments){
+    allComments = comments;
+}
+
+void Post::upvote(int upvote) {up = upvote;}
+void Post::downvote(int downvote){down = downvote;}
+
+void Post::upvote(void) {up++;}
+void Post::downvote(void){down++;}
+
 
 
 

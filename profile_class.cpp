@@ -1,8 +1,8 @@
 //
-// Created by ebutl on 2022-10-25.
+// Created by jmcor on 11/29/2022.
 //
 
-#include "profile.h"
+#include "profile_class.h"
 //errors
 char* MissingUser::what(){
     return (char*)"Please input a username";
@@ -20,10 +20,14 @@ char* WrongEmail::what(){
     return (char *) "Please enter a valid email ending in \"@queensu.ca\"";
 }
 
+char* passConfirmError::what(){
+    return (char *) "Password confirmation does not match";
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 
 //constructors
-profile::profile(string mail, string user, string pass) {
+profile_class::profile_class(string mail, string user, string pass, string confirmPass) {
     int spec = 0;
     int nums = 0;
     int count = 0;
@@ -37,26 +41,34 @@ profile::profile(string mail, string user, string pass) {
 
     //verify that the entered email is of "@queensu.ca" domain
     if(mail.substr(mail.length() - 11) != "@queensu.ca") throw WrongEmail();
-    if(user.size() < 3 || user.size() > 12) throw WrongUser();
+    if(user.size() < 3 || user.size() > 12) throw BadUser();
 
     for(int i = 0; i < pass.size(); i++){
         if(pass[i] == '#' || pass[i] == '!' || pass[i] == '?') {
             spec++;
             count++;
         } //verify special characters
-
+        else if (pass[i] == '0' || pass[i] == '1' || pass[i] == '2' || pass[i] == '3' || pass[i] == '4' || pass[i] == '5' || pass[i] == '6' || pass[i] == '7' ||pass[i] == '8' || pass[i] == '9') {
+            nums++;
+            count++;
+        }
             //verify numbers in password
 
         else count++; //verify some character does exist, update count
     }
 
     if(count > 12 || count < 3 || nums < 2 || spec < 1){
-        throw WrongPass();
+        throw BadPassword();
+    }
+
+    if (pass != confirmPass) {
+        throw passConfirmError();
     }
 
     email = mail;
     username = user;
     password = pass;
+    confirmPassword = confirmPass;
     //field to store image
 
     //store in sql
@@ -65,37 +77,29 @@ profile::profile(string mail, string user, string pass) {
 //---------------------------------------------------------------------------------------------------------------------
 
 //accessors
-string profile::get_username(){ return username;}
+string profile_class::get_username(){ return username;}
 
-string profile::get_email() { return email;}
+string profile_class::get_email() { return email;}
 
-string profile::get_password() { return password;}
+string profile_class::get_password() { return password;}
 
-vector<Post> profile::get_self(){ return selfPost;}
+string profile_class::get_confirmPassword() { return confirmPassword;}
+
 
 //---------------------------------------------------------------------------------------------------------------------
 
-//field editors
-//add posts made by profile to its log
-void profile::makePost(string y, string z) {
-    Post toAdd = Post(username, y, z);
-    selfPost.push_back(toAdd);}
-
-
-
-
 
 //change the username of user
-int profile::change_username(string newUser) {
-    if(newUser.size() < 3 || newUser.size() > 12) throw WrongUser();
+int profile_class::change_username(string newUser) {
+    if(newUser.size() < 3 || newUser.size() > 12) throw BadUser();
 
     else{ //change username if verified
         username = newUser;
     }
-
+    return 0;
 }
 //change the password of user
-int profile::change_password(string newPass) {
+int profile_class::change_password(string newPass) {
     int count;
     int spec;
     for(int i = 0; i < newPass.size(); i++){
@@ -108,6 +112,6 @@ int profile::change_password(string newPass) {
 
         else count++; //verify some character does exist, update count
     }
-
+    return 0;
 }
 

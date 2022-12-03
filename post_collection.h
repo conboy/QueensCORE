@@ -13,27 +13,50 @@ using namespace std;
 
 
 
+
 class DbPostFail : public std::exception {
 public:
     char *what();
 };
 class PostCollection {
 private:
-    vector<Post> selectedPosts;
-    int numSelectedPosts;
+    const char* s;
+
+
 public:
-    int createPostDB(const char *s);
+    PostCollection(const char* dir);
 
-    int createPostTable(const char *s);
+    int createPostDB();
 
-    int storeToPostDB(const char *s, Post post);
+    int createPostTable();
 
-    int selectPostData(const char *s);
+    int storeToPostDB(Post post);
 
-    int deleteData(const char *s, string column, string del);
+    int selectPostDataEvent(int event);
 
-    void appendPost (Post post);
+    int selectPostDataOwner(string ownerName);
 
+    int deleteData(const string column, const string del);
+
+    int selectPostDataAll();
+
+    int updateVotes(const string title, int up, int down);
+
+    int storeVectorPosts(vector<Post> post);
+
+    int deleteData(const int event);
+
+    int upvote(const string title);
+
+    int downvote(const string title);
+
+    int comment(const string title, const string comment_owner, const string comment);
+
+    int selectPostDataTitle(const string title);
+
+    int deleteDataTitle(const string title);
 };
+
+vector<Post> getSelectedData();
 
 #endif //QUEENSCORE_POST_COLLECTION_H

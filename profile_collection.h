@@ -5,19 +5,24 @@
 
 #include <string>
 #include <vector>
-#include "profile.h"
+#include "profile_class.h"
 #include "sqlite3.h"
 
 using namespace std;
 
-
-class profileCollection {
-
+class DbProfileFail : public std::exception {
+public:
+    char *what();
+};
+class profile_collection {
+private:
+    const char* s;
+public:
     //how do we initalize database?
-
-    int create_profileDB(const char *dbName);
+    profile_collection(const char *directory);
+    int create_profileDB();
     int createProfileTable();
-    int storeToProfileDB(profile profile); //how is username passed? alter user create to include storeToPRofile?
+    int storeToProfileDB(profile_class profile); //how is username passed? alter user create to include storeToPRofile?
 
     //function that gets all fields for use by website:
     /*

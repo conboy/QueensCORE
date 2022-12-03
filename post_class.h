@@ -38,9 +38,11 @@ private:
 
 
     //Vector storing comments and
+
     vector<string> com;
     vector<string> com_owner;
     int num_comments;
+    string allComments;
 
 
     //Ints to hold upvoting and downvoting
@@ -63,11 +65,15 @@ public:
     int get_num_com();
     vector<string> get_comment();
     vector<string> get_comment_owner();
-
+    string get_comment_string();
     //Posting Comment & up/downvoting
     void comment(string, string);
-    void upvote();
-    void downvote();
+    void upvote(int upvote);
+    void downvote(int downvote);
+    void setAllComments(string comments);
+    string returnAllComments();
 
+    void upvote(void);
 
+    void downvote(void);
 };
