@@ -20,7 +20,9 @@ class Posts {
 
 var postList= [new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"])]
 postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
-postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))  
+postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"])) 
+postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
+postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
 
 var cat="Clubs";
 

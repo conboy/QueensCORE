@@ -1,5 +1,15 @@
+import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
 
 const SignIn = () => {
+        const [name, setName] = useState('');
+        const [cookies, setCookie] = useCookies(['user']);
+
+        const handle = () => {
+            setCookie('Name',name,{path:'/'});
+
+        }
+
 
         const ws =  new WebSocket('ws://127.0.0.1:2236');
     
@@ -33,10 +43,13 @@ const SignIn = () => {
                 <h1>Create Account</h1>
                 <form>
                     <h3>Enter {SchoolName} email:</h3>
-                     <input type="text" placeholder='netID@queensu.ca' id="registeremail"/>
-                     
+                     <input type="text" onChange={(e)=> setName(e.target.value)} placeholder='netID@queensu.ca' id="registeremail"/>
+                     <button onClick={handle}>set cookie name</button>{' '}
                 </form>
-            
+                <h3>Username:</h3>
+                <form action="">
+                    <input type="text" onChange={(e)=> setName(e.target.value)} placeholder='netID@queensu.ca' id="registeremail"/>
+                </form>
                 <form>
                     <h3>Enter password:</h3>
                      <input type="text" placeholder='Password' id="registerpassword"/>
