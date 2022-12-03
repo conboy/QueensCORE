@@ -11,7 +11,7 @@
 #include "profile_collection.h"
 #include "post_collection.h"
 
-
+// change file paths to your filepath
 profile_collection profiledb("C:\\Users\\conrad\\team-17-indian\\db\\Profile.db");
 PostCollection postdb("C:\\Users\\conrad\\team-17-indian\\db\\Post.db");
 using namespace std;
