@@ -7,6 +7,9 @@
 
 using namespace std;
 
+string dup;
+bool duplicate;
+
 char* DbProfileFail::what(){
     return (char *) "Database creation or access failed.";
 }
@@ -94,5 +97,38 @@ int profile_collection::storeToProfileDB(profile_class prof) {
     }
 
     return 0;
+}
+
+int callbackprofile(void* notUsed, int argc, char** argv, char** azColName) {
+    if (argc <= 0) cout << "Empty DB" << endl;
+    else {
+        if (dup == argv[1])
+            duplicate = true;
+        else duplicate = false;
+    }
+}
+
+
+
+bool profile_collection::checkForProfile(const string username) {
+    dup = username;
+    sqlite3* DB;
+    char* errorMessage;
+    string sql = "SELECT * FROM PROFILES WHERE USER = '";
+    sql.append(username);
+    sql.append("';");
+
+    int exit = sqlite3_open(s, &DB);
+
+
+    exit = sqlite3_exec(DB, sql.c_str(), callbackprofile, NULL, &errorMessage);
+
+    if (exit != SQLITE_OK) {
+        cerr << "Error in selecting data" << endl;
+        sqlite3_free(errorMessage);
+        throw DbProfileFail();
+    }
+
+    return duplicate;
 }
 

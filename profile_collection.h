@@ -8,6 +8,7 @@
 #include "profile_class.h"
 #include "sqlite3.h"
 
+
 using namespace std;
 
 class DbProfileFail : public std::exception {
@@ -23,6 +24,8 @@ public:
     int create_profileDB();
     int createProfileTable();
     int storeToProfileDB(profile_class profile); //how is username passed? alter user create to include storeToPRofile?
+
+    bool checkForProfile(const string username);
 
     //function that gets all fields for use by website:
     /*

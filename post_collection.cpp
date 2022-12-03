@@ -95,6 +95,7 @@ int PostCollection::storeToPostDB(Post post) {
     string title = post.get_title();
     string description = post.get_description();
     string eString = post.get_event_type();
+
     int event;
     if (eString == "Nightlife") event = 0;
     if (eString == "Special Event") event = 1;
@@ -344,6 +345,7 @@ int PostCollection::updateVotes(string title, int up, int down){
 }
 
 int PostCollection::upvote(const string title){
+    cout << "Upvoting post: " + title << endl;
     selectedData.clear();
     int exit = selectPostDataTitle(title);
     for (Post temp : selectedData){
@@ -355,6 +357,7 @@ int PostCollection::upvote(const string title){
 }
 
 int PostCollection::downvote(const string title){
+    cout << "Downvoting post: " + title << endl;
     selectedData.clear();
     int exit = selectPostDataTitle(title);
     for (Post temp : selectedData){
@@ -366,6 +369,7 @@ int PostCollection::downvote(const string title){
 }
 
 int PostCollection::comment(const string title, const string owner, const string comment){
+    cout << "Commenting: " + comment + " to the post: " + title + " by: " + owner << endl;
     selectedData.clear();
     int exit = selectPostDataTitle(title);
     for (Post temp : selectedData){
