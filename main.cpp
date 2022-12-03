@@ -81,7 +81,7 @@ do_session(tcp::socket socket)
             if (message_type == "signin") {
                 string mail = message_array[1];
                 string pass = message_array[2];
-
+                //profiledb.signin(mail, pass);
             }
 
             // Create post
@@ -101,17 +101,21 @@ do_session(tcp::socket socket)
             }
             // TODO: Add comment
             if (message_type == "comment") {
-
+                string title = message_array[1];
+                string owner = message_array[2];
+                string comment = message_array[3];
+                postdb.comment(title, owner, comment);
             }
 
             // TODO: up vote
             if (message_type == "upvote") {
                 string title = message_array[1];
-
+                postdb.upvote(title);
             }
             // TODO: downvote
             if (message_type == "downvote") {
-
+                string title = message_array[1];
+                postdb.downvote(title);
             }
             // Register an account
             if (message_type == "register") {
