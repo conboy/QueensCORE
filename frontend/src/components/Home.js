@@ -28,8 +28,14 @@ function Home(){
 
     const ws =  new WebSocket('ws://127.0.0.1:2236');
 
-    function CommentInputToString(document){
-      // return "Add Comment:"+document.getElementById("Comment").value+
+    function UpVoteInputToString(document,Title){
+        return "UpVote:"+Title;
+    }
+    function DownVoteInputToString(document,Title){
+        return "DownVote:"+Title;
+    }
+    function CommentInputToString(document,Title,Author){
+      return "comment:"+Title+":"+Author+":"+document.getElementByID("addComment");
     }
 
     const [name,setName]= useState('david');
@@ -62,9 +68,9 @@ function Home(){
         postList.map((post, index) =>
          <div  className="posts" key={index}>
 
-          <button style={{float: "left",backgroundColor:'green'}}>{post.upvotes} Up Votes</button> 
+          <button onClick={() => ws.send(UpVoteInputToString(document,post.postTitle))} style={{float: "left",backgroundColor:'green'}}>{post.upvotes} Up Votes</button> 
 
-          <button style={{float: "left",backgroundColor:'red'}}>{post.downvotes} Down Votes</button> 
+          <button onClick={() => ws.send(DownVoteInputToString(document,post.postTitle))} style={{float: "left",backgroundColor:'red'}}>{post.downvotes} Down Votes</button> 
             
             <h2 style={{float: "left"}}>{post.postTitle}</h2><h3 style={{textAlign:"right"}}>Posted by: {post.author}</h3>
             <p> </p>
@@ -83,7 +89,7 @@ function Home(){
               <form >
                      <input type="text" placeholder='Comment' id="addComment"/>
               </form> 
-              <button type="submit" onClick={() => ws.send(CommentInputToString(document))}>add comment</button>  
+              <button type="submit" onClick={() => ws.send(CommentInputToString(document,post.postTitle,post.author))}>add comment</button>  
             </div>
           </div>
 
