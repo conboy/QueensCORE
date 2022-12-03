@@ -1,7 +1,13 @@
 
 
-
+// post:owner:title:description:type
 const CreatePost = () =>{
+
+  const ws =  new WebSocket('ws://127.0.0.1:2236');
+  
+
+
+
   return (
     <div className="createPostPage">
       <div className="cpContainer">

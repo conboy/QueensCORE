@@ -75,21 +75,21 @@ function Home(){
             <h2 style={{float: "left"}}>{post.postTitle}</h2><h3 style={{textAlign:"right"}}>Posted by: {post.author}</h3>
             <p> </p>
             <p style={{tempBio}}>{post.body}</p>
-            <div className="comments">
-              <h3 style={{fontSize:23}}>Comments:</h3>
+            <div style={{textAlign:'left'}} className="comments">
+              <h3 style={{textDecoration:'bold', fontSize:23}}>Comments:</h3>
               {postList[index].comments.length > 0 ? (postList[index].comments.map((comment, indexC) =>
               <div key={indexC}>
-                <div><p >{comment}</p></div>
+                <div><p style={{marginLeft:5}}>{comment}</p></div>
                 
                 
               </div>
             
             )) : (<div>No Comments</div>)}
               
-              <form >
+              <form style={{margin:5, float:'left'}}>
                      <input type="text" placeholder='Comment' id="addComment"/>
               </form> 
-              <button type="submit" onClick={() => ws.send(CommentInputToString(document,post.postTitle,post.author))}>add comment</button>  
+              <button style={{marginBottom:10}} type="submit" onClick={() => ws.send(CommentInputToString(document,post.postTitle,post.author))}>add comment</button>  
             </div>
           </div>
 
