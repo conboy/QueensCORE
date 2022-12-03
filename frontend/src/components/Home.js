@@ -1,4 +1,3 @@
-
 import { getAllByPlaceholderText } from '@testing-library/react';
 import {useState } from 'react';
 import CreatePost from './CreatePost';
@@ -22,8 +21,8 @@ class Posts {
 }
 
 var postList= [new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team")]
-
-  
+postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team"))
+postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team"))  
 
 var cat="Clubs";
 
@@ -36,12 +35,13 @@ function Home(){
 
 
     const category="Clubs";
-    // createPost = post{
-        
+
+    function createPost(e){
+        setName('David',e);
 
       
-    //     postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team"));
-    // }
+        postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team"));
+    }
 
 
 
@@ -51,7 +51,7 @@ function Home(){
             
             <h1>  Queens Core: {cat} </h1>
             
-            <button onClick={this.createPost}>  Create Post </button>
+            <button onClick={createPost}>  Create Post </button>
             <div className="posts">
 
 
