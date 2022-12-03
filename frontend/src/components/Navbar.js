@@ -2,7 +2,7 @@ const Navbar = () =>{
     return(
         <nav className="navbar">
             {/* <img src="logo.png" alt="nothing" width="500" height="333"/> */}
-            <h1>Queens</h1> 
+            <h1 style={{float:'left'}}>Queens</h1> 
             <h1 style={{color: '#ee3000'}}> CORE</h1> 
             <div className="links">
                 <a href="/">Home</a>

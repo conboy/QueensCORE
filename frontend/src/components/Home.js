@@ -1,16 +1,8 @@
 import { getAllByPlaceholderText } from '@testing-library/react';
 import {useState } from 'react';
-import CreatePost from './CreatePost';
 import { BrowserRouter as Router,Link } from 'react-router-dom';
 
-var usersData = {
-  total: 3,
-  data: [
-    { votes: 321, postTitle: "QMIND", username: "floppydiskette", body: "Queens Ai design club"},
-    { votes: 163, postTitle: "QUANTT", username: "siliconeidolon", body: "A quantatative trading club" },
-    { votes: 133, postTitle: "QSC", username: "benisphere",body:" The queens space conference"}
-  ]
-};
+
 class Posts {
   constructor(upvotes,downvotes,postTitle,author,body,comments) { 
     this.upvotes=upvotes
@@ -56,47 +48,44 @@ function Home(){
             <Link to="/CreatePost">
                 <button onClick={createPost}>  Create Post </button>
             </Link>
-            <div className="posts">
+            <div className="postss">
 
 
             {postList.length > 0 ? (
         postList.map((post, index) =>
-         <div style={{backgroundColor: '#ee3000'}} className='posts' key={index}>
-            {postList.length}|
-            {post.downvotes}Upvotes||
-            {post.downvotes}Down|| 
-            {post.postTitle} Posted by: {post.author} 
-            <p>{post.body}</p>
-            {postList[1].comments.length > 0 ? (postList[1].comments.map((comment, indexC) =>
-            <div style={{backgroundColor: '#ffffff'}} className='comments' key={indexC}>
+         <div  className="posts" key={index}>
 
-              <p>{comment}</p>
-              
-            </div>
+          <button style={{float: "left",backgroundColor:'green'}}>{post.upvotes} Up Votes</button> 
+
+          <button style={{float: "left",backgroundColor:'red'}}>{post.downvotes} Down Votes</button> 
+            
+            <h2 style={{float: "left"}}>{post.postTitle}</h2><h3 style={{textAlign:"right"}}>Posted by: {post.author}</h3>
+            <p style={{textAlign:"left"}}>{post.body}</p>
+            <div className="comments">
+              <h3 style={{}}>Comments:</h3>
+              {postList[1].comments.length > 0 ? (postList[1].comments.map((comment, indexC) =>
+              <div key={indexC}>
+                <div><p >{comment}</p></div>
+                
+                
+              </div>
             
             )) : (<div>No Comments</div>)}
               
               
               <button>add comment</button>  
+            </div>
           </div>
 
            )
       ) : (
         <div>No Posts </div>
       )} 
-        {postList[1].comments.length > 0 ? (postList[1].comments.map((comment, indexC) =>
-          <div style={{backgroundColor: '#ee4000'}} className='comments' key={indexC}>
 
-            <p>{comment}</p>
-    
-          </div>
-           )) : (<div>No Comments</div>)}
       
         </div>
       </div>
-        
      );
-
 }
 
 export default Home;
