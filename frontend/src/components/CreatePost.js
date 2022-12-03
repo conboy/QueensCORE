@@ -1,10 +1,13 @@
+
+
+
 const CreatePost = () =>{
   return (
     <div className="createPostPage">
       <div className="cpContainer">
-        <h1>Create A Post</h1>
+        <h1 style={{color:"white"}}>Create A Post</h1>
         <div className="inputGp">
-          <label> Title:</label>
+          <label style={{color:"white"}}> Title:</label>
           <input
             placeholder="Title..."
             // onChange={(event) => {
@@ -13,7 +16,7 @@ const CreatePost = () =>{
           />
         </div>
         <div className="inputGp">
-          <label> Post:</label>
+          <label style={{color:"white"}}> Post:</label>
           <textarea
             placeholder="Post..."
             // onChange={(event) => {

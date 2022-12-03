@@ -2,6 +2,12 @@ import { getAllByPlaceholderText } from '@testing-library/react';
 import {useState } from 'react';
 import { BrowserRouter as Router,Link } from 'react-router-dom';
 
+var tempBio = "QMIND is Canada’s largest student-run organization. We empower undergraduate student’s at Queen’s University to tackle real-world problems through the use of artificial intelligence, machine learning, and various other disruptive technologies. Our organization spans over 200 members, 30+ design teams, a consulting stream, a published AI research wing, an incubator program, and a national-scale conference with 400+ delegates held annually in Toronto, ON.Our mandate is to lower the entry barriers preventing undergraduate students to work on complex problems using disruptive technologies. Since inception, our design teams have completed 150+ projects and our members have gone to work at North America’s largest including McKinsey, Microsoft, Google, Amazon, etc.";
+
+function logInputToString(document) {
+  return "login:"+document.getElementById("email").value+":"+document.getElementById("password").value;
+}
+
 
 class Posts {
   constructor(upvotes,downvotes,postTitle,author,body,comments) { 
@@ -15,9 +21,9 @@ class Posts {
   }
 }
 
-var postList= [new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team",["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"])]
-postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team",["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
-postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team",["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))  
+var postList= [new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"])]
+postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
+postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))  
 
 var cat="Clubs";
 
@@ -60,10 +66,11 @@ function Home(){
           <button style={{float: "left",backgroundColor:'red'}}>{post.downvotes} Down Votes</button> 
             
             <h2 style={{float: "left"}}>{post.postTitle}</h2><h3 style={{textAlign:"right"}}>Posted by: {post.author}</h3>
-            <p style={{textAlign:"left"}}>{post.body}</p>
+            <p> </p>
+            <p style={{tempBio}}>{post.body}</p>
             <div className="comments">
-              <h3 style={{}}>Comments:</h3>
-              {postList[1].comments.length > 0 ? (postList[1].comments.map((comment, indexC) =>
+              <h3 style={{fontSize:23}}>Comments:</h3>
+              {postList[index].comments.length > 0 ? (postList[index].comments.map((comment, indexC) =>
               <div key={indexC}>
                 <div><p >{comment}</p></div>
                 
@@ -72,7 +79,9 @@ function Home(){
             
             )) : (<div>No Comments</div>)}
               
-              
+              <form >
+                     <input type="text" placeholder='Comment' id="addComment"/>
+              </form> 
               <button>add comment</button>  
             </div>
           </div>

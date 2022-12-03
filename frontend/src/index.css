@@ -103,7 +103,9 @@ code {
 
 .home {
   background-color: rgb(92, 0, 0);
-  margin: 25%;
+  margin-top: 10%;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
 .comments{
@@ -124,3 +126,14 @@ code {
 
 
 /* Home page Styling  */
+/* Create post styling  */
+.createPostPage{
+  background-color: #2e0101;
+  margin-top: 15%;
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5%;
+  border: 4px #ffffff;
+}
+/* Create post styling  */
