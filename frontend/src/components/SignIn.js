@@ -1,24 +1,40 @@
 import React, { useState } from 'react';
 import { useCookies } from 'react-cookie';
 
+
+
+const socket =  new WebSocket('ws://127.0.0.1:2236');
+
+
 const SignIn = () => {
         const [name, setName] = useState('');
         const [cookies, setCookie] = useCookies(['user']);
+
+
 
         const handle = () => {
             setCookie('Name',name,{path:'/'});
 
         }
 
+    // Listen for messages
+    socket.addEventListener('message', (event) => {
+        alert("Signed in as " +event.data);
+        setName(event.data);
+        handle();
+    });
 
-        const ws =  new WebSocket('ws://127.0.0.1:2236');
-    
-        function logInputToString(document) {
-            return "login:"+document.getElementById("email").value+":"+document.getElementById("password").value;
+
+
+    function logInputToString(document) {
+            return "signin:"+document.getElementById("email").value+":"+document.getElementById("password").value;
         }
 
         function registerInputToString(document) {
-            return "register:"+document.getElementById("registeremail").value+":"+document.getElementById("registerpassword").value;
+            return "register:"+document.getElementById("registeremail").value+":"
+                +document.getElementById("registerusername").value+":"
+                +document.getElementById("registerpassword").value+":"
+            +document.getElementById("registerpassword").value;
         }
 
 //  going to be using state hooks to handle input 
@@ -36,7 +52,7 @@ const SignIn = () => {
                         <h3>Enter password:</h3>
                          <input type="text" placeholder='Password' id="password"/>
                     </form>
-                    <button type="submit" onClick = {() => ws.send(logInputToString(document))}>Sign In</button>
+                    <button type="submit" onClick = {() => socket.send(logInputToString(document))}>Sign In</button>
             </div>
             
             <div className="form2">
@@ -48,7 +64,7 @@ const SignIn = () => {
                 </form>
                 <h3>Username:</h3>
                 <form action="">
-                    <input type="text" onChange={(e)=> setName(e.target.value)} placeholder='netID@queensu.ca' id="registeremail"/>
+                    <input type="text" onChange={(e)=> setName(e.target.value)} placeholder='user name' id="registerusername"/>
                 </form>
                 <form>
                     <h3>Enter password:</h3>
@@ -56,13 +72,13 @@ const SignIn = () => {
                 </form>    
                 <form>
                     <h3>Confirm password:</h3>
-                     <input type="text" placeholder='Password'/>
+                     <input type="text" placeholder='registerPassword'/>
                 </form>           
-                <button type="submit" onClick = {() => ws.send(registerInputToString(document))}>Create Account</button>
+                <button type="submit" onClick = {() => socket.send(registerInputToString(document))}>Create Account</button>
         </div>
-            
         </div>
      );
 }
+
 
 export default SignIn;

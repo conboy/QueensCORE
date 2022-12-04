@@ -55,7 +55,7 @@ do_session(tcp::socket socket)
             // Put the buffer contents in a string
             string client_message = buffers_to_string(buffer.cdata());
             // Print the client message to terminal
-            cout << client_message << endl;
+            //cout << client_message << endl;
             // Do logic on the message
 
             // Turn message into an array delimited by  :
@@ -90,10 +90,8 @@ do_session(tcp::socket socket)
                 else {
                     ws.text(true);
                     const_buffer user(username.c_str(), strlen(username.c_str()));
-                    cout << sizeof(username.c_str()) << endl;
-                    cout << username.c_str() <<endl;
-                    cout << make_printable(user) << endl;
                     ws.write(user);
+                    cout << username + " signed in" << endl;
                 }
 
             }
@@ -152,13 +150,13 @@ do_session(tcp::socket socket)
                     }
                     catch (profile_class) {
                         cout << "Unable to make account" << endl;
-                        const_buffer message("Unable to make account", 22);
+                        //const_buffer message("Unable to make account", 22);
                     }
 
                 }
                 catch (...){
                     cout << "Unable to make account" << endl;
-                    const_buffer message("Unable to make account", 22);
+                    //const_buffer message("Unable to make account", 22);
                 }
 
 
@@ -169,8 +167,8 @@ do_session(tcp::socket socket)
                 ws.text(true);
 
                 // Send a message back saying if the account was created
-                if (isCreated == true) ws.write(registerpass);
-                else ws.write(registerfail);
+//                if (isCreated == true) ws.write(registerpass);
+//                else ws.write(registerfail);
             }
 
         }
