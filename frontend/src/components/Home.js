@@ -4,7 +4,13 @@ import { BrowserRouter as Router,Link } from 'react-router-dom';
 
 var tempBio = "QMIND is Canada’s largest student-run organization. We empower undergraduate student’s at Queen’s University to tackle real-world problems through the use of artificial intelligence, machine learning, and various other disruptive technologies. Our organization spans over 200 members, 30+ design teams, a consulting stream, a published AI research wing, an incubator program, and a national-scale conference with 400+ delegates held annually in Toronto, ON.Our mandate is to lower the entry barriers preventing undergraduate students to work on complex problems using disruptive technologies. Since inception, our design teams have completed 150+ projects and our members have gone to work at North America’s largest including McKinsey, Microsoft, Google, Amazon, etc.";
 
+var temp = "0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:title:David:post;"
+//Set me = to mega string 
+var postCollection = temp.split(";");
 
+
+
+var post=""
 
 class Posts {
   constructor(upvotes,downvotes,postTitle,author,body,comments) { 
@@ -19,9 +25,6 @@ class Posts {
 }
 
 var postList= [new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"])]
-postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
-postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"])) 
-postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
 postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks!!", "Ethan : Wow this looks too cool", "Liam : I absolutely garb at coding LOL"]))
 
 var cat="Clubs";
@@ -39,6 +42,8 @@ function Home(){
     function CommentInputToString(document,Title,Author){
       return "comment:"+Title+":"+Author+":"+document.getElementByID("addComment");
     }
+
+
 
     const [name,setName]= useState('david');
 
@@ -59,34 +64,36 @@ function Home(){
     return ( 
         <div className="home">
             
-            <h1>  Queens Core: {cat} </h1>
+            <h1>  Queens Core: {cat}{} </h1>
             <Link to="/CreatePost">
                 <button onClick={createPost}>  Create Post </button>
             </Link>
             <div className="postss">
 
 
-            {postList.length > 0 ? (
-        postList.map((post, index) =>
+
+
+            {postCollection.length > 0 ? (
+        postCollection.map((posts, index) =>
          <div  className="posts" key={index}>
+          {post=posts.split(":")}
+          <button onClick={() => ws.send(UpVoteInputToString(document,post.postTitle))} style={{float: "left",backgroundColor:'green'}}>{post[0]} Up Votes</button> 
 
-          <button onClick={() => ws.send(UpVoteInputToString(document,post.postTitle))} style={{float: "left",backgroundColor:'green'}}>{post.upvotes} Up Votes</button> 
-
-          <button onClick={() => ws.send(DownVoteInputToString(document,post.postTitle))} style={{float: "left",backgroundColor:'red'}}>{post.downvotes} Down Votes</button> 
+          <button onClick={() => ws.send(DownVoteInputToString(document,post.postTitle))} style={{float: "left",backgroundColor:'red'}}>{post[1]} Down Votes</button> 
             
-            <h2 style={{float: "left"}}>{post.postTitle}</h2><h3 style={{textAlign:"right"}}>Posted by: {post.author}</h3>
+            <h2 style={{float: "left"}}>{post[2]}</h2><h3 style={{textAlign:"right"}}>Posted by: {post[3]}</h3>
             <p> </p>
-            <p style={{tempBio}}>{post.body}</p>
+            <p style={{tempBio}}>{post[4]}</p>
             <div style={{textAlign:'left'}} className="comments">
               <h3 style={{textDecoration:'bold', fontSize:23}}>Comments:</h3>
-              {postList[index].comments.length > 0 ? (postList[index].comments.map((comment, indexC) =>
+              {/* {postList[index].comments.length > 0 ? (postList[index].comments.map((comment, indexC) =>
               <div key={indexC}>
                 <div><p style={{marginLeft:5}}>{comment}</p></div>
                 
                 
               </div>
             
-            )) : (<div>No Comments</div>)}
+            )) : (<div>No Comments</div>)} */}
               
               <form style={{margin:5, float:'left'}}>
                      <input type="text" placeholder='Comment' id="addComment"/>
