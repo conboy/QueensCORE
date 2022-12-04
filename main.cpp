@@ -174,12 +174,16 @@ do_session(tcp::socket socket)
             // get posts
             if (message_type == "getposts") {
                 vector<Post> data;
+                string postString;
                 postdb.selectPostDataAll();
                 data = getSelectedData();
-                for (Post i: data)
-                    std::cout << Post::postToString(i) << ' ';
+                for (Post i: data) {
+                    std::cout << Post::postToString(i);
+                    postString += Post::postToString(i);
+                }
+
                 ws.text(true);
-                const_buffer user(username.c_str(), strlen(username.c_str()));
+                const_buffer user(postString.c_str(), strlen(postString.c_str()));
                 ws.write(user);
             }
 
