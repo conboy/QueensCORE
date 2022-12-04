@@ -12,16 +12,12 @@ const SignIn = () => {
 
 
 
-        const handle = () => {
-            setCookie('Name',name,{path:'/'});
-
-        }
 
     // Listen for messages
     socket.addEventListener('message', (event) => {
-        alert("Signed in as " +event.data);
-        setName(event.data);
-        handle();
+        //alert("Signed in as " +event.data);
+        setCookie('Name',event.data,{path:'/'})
+
     });
 
 

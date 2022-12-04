@@ -72,7 +72,7 @@ do_session(tcp::socket socket)
                 end = client_message.find(del, start);
                 message_array[i] = client_message.substr(start, end - start);
                 i++;
-                //cout << client_message.substr(start, end - start) << endl;
+                cout << client_message.substr(start, end - start) << endl;
             } while (end != -1);
 
             string message_type = message_array[0];
@@ -169,6 +169,18 @@ do_session(tcp::socket socket)
                 // Send a message back saying if the account was created
 //                if (isCreated == true) ws.write(registerpass);
 //                else ws.write(registerfail);
+            }
+
+            // get posts
+            if (message_type == "getposts") {
+                vector<Post> data;
+                postdb.selectPostDataAll();
+                data = getSelectedData();
+                for (Post i: data)
+                    std::cout << Post::postToString(i) << ' ';
+                ws.text(true);
+                const_buffer user(username.c_str(), strlen(username.c_str()));
+                ws.write(user);
             }
 
         }

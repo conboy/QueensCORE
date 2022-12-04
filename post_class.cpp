@@ -68,6 +68,18 @@ void Post::setAllComments(string comments){
     allComments = comments;
 }
 
+string Post::postToString(Post post) {
+    string postString="";
+    postString += to_string(post.get_upvote()) + ":"
+            + to_string(post.get_downvote()) + ":"
+            + post.get_title() + ":"
+            + post.get_owner() + ":"
+            + post.get_description() //+ ":"
+            //+ post.get_comment_string()
+            + ";";
+    return postString;
+}
+
 void Post::upvote(int upvote) {up = upvote;}
 void Post::downvote(int downvote){down = downvote;}
 

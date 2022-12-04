@@ -76,4 +76,6 @@ public:
     void upvote(void);
 
     void downvote(void);
+
+    static string postToString(Post post);
 };
