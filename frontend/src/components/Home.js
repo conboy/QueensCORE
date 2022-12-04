@@ -4,14 +4,14 @@ import { BrowserRouter as Router,Link } from 'react-router-dom';
 
 var tempBio = "QMIND is Canada’s largest student-run organization. We empower undergraduate student’s at Queen’s University to tackle real-world problems through the use of artificial intelligence, machine learning, and various other disruptive technologies. Our organization spans over 200 members, 30+ design teams, a consulting stream, a published AI research wing, an incubator program, and a national-scale conference with 400+ delegates held annually in Toronto, ON.Our mandate is to lower the entry barriers preventing undergraduate students to work on complex problems using disruptive technologies. Since inception, our design teams have completed 150+ projects and our members have gone to work at North America’s largest including McKinsey, Microsoft, Google, Amazon, etc.";
 
-var temp = "0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:title:David:post;"
+//var temp = "0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:crazy night:conrad:insane; 0:0:title:David:post;"
 //Set me = to mega string 
 var postCollection = temp.split(";");
 
 
 
-var post=""
-
+var post="";
+const ws =  new WebSocket('ws://127.0.0.1:2236');
 class Posts {
   constructor(upvotes,downvotes,postTitle,author,body,comments) { 
     this.upvotes=upvotes
@@ -30,14 +30,28 @@ postList.push(new Posts(1,2,"QMIND","David Hoernke",tempBio,["David : This sucks
 var cat="Clubs";
 
 function Home(){
+    const [temp, setTemp] = useState('');
+    const [postCollection, setPostCollection] = useState('');
+    const [title, setTitle] = useState('');
 
-    const ws =  new WebSocket('ws://127.0.0.1:2236');
+
+    ws.addEventListener('open', (event) => {
+        ws.send("getposts");
+    });
+
+    ws.addEventListener('message', (event) => {
+        //alert("Signed in as " +event.data);
+        setTemp(event.data);
+        setPostCollection(temp.split(";"));
+    });
+
 
     function UpVoteInputToString(document,Title){
-        return "UpVote:"+Title;
+        alert(Title);
+        return "upvote:"+Title;
     }
     function DownVoteInputToString(document,Title){
-        return "DownVote:"+Title;
+        return "downvote:"+Title;
     }
     function CommentInputToString(document,Title,Author){
       return "comment:"+Title+":"+Author+":"+document.getElementByID("addComment");
@@ -51,17 +65,8 @@ function Home(){
 
     const category="Clubs";
 
-    function createPost(e){
-        setName('David',e);
 
-      
-        postList.push(new Posts(1,2,"QMIND","David Hoernke","An Ai focused design team"));
-    }
-
-
-
-
-    return ( 
+    return (
         <div className="home">
             
             <h1>  Queens Core: {cat}{} </h1>

@@ -75,7 +75,7 @@ string Post::postToString(Post post) {
             + post.get_title() + ":"
             + post.get_owner() + ":"
             + post.get_description() //+ ":"
-            //+ post.get_comment_string()
+            //+ post.returnAllComments()
             + ";";
     return postString;
 }
