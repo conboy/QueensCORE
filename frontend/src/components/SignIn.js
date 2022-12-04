@@ -59,19 +59,18 @@ const SignIn = () => {
                 <h1>Create Account</h1>
                 <form>
                     <h3>Enter {SchoolName} email:</h3>
-                     <input type="text" onChange={(e)=> setName(e.target.value)} placeholder='netID@queensu.ca' id="registeremail"/>
-                     <button onClick={handle}>set cookie name</button>{' '}
+                     <input type="text"  placeholder='netID@queensu.ca' id="registeremail"/>
                 </form>
                 <h3>Username:</h3>
                 <form action="">
-                    <input type="text" onChange={(e)=> setName(e.target.value)} placeholder='user name' id="registerusername"/>
+                    <input type="text"  placeholder='user name' id="registerusername"/>
                 </form>
                 <form>
                     <h3>Enter password:</h3>
                      <input type="text" placeholder='Password' id="registerpassword"/>
                 </form>    
                 <form>
-                    <h3>Confirm password:</h3>
+                    <h3>Confirm password:{cookies.Name}</h3>
                      <input type="text" placeholder='registerPassword'/>
                 </form>           
                 <button type="submit" onClick = {() => socket.send(registerInputToString(document))}>Create Account</button>
